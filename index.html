@@ -35,7 +35,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%;display:block}
 h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.005em}
 p{margin:0}
@@ -62,7 +62,16 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .lede{margin-top:16px;font-size:18.5px;color:var(--muted);max-width:30em}
 .tagline{margin-top:22px;font-family:var(--serif);font-size:23px;line-height:1.2;color:var(--teal)}
 .tagline i{display:block;color:var(--muted);font-size:19px}
-.trust{margin-top:26px;display:flex;align-items:center;gap:14px}
+.trust{margin-top:22px;display:flex;align-items:center;gap:14px}
+.card-photo{margin:-24px -24px 18px;position:relative;aspect-ratio:16/9;max-width:none;overflow:hidden;border-radius:20px 20px 0 0;background:var(--teal)}
+.card-photo img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+.card-photo figcaption{position:absolute;left:12px;bottom:10px;background:rgba(21,36,31,.78);color:var(--on-dark);font-size:13px;font-weight:600;padding:5px 10px;border-radius:8px}
+.card-photo .ph-fallback{position:absolute;inset:0;display:grid;place-items:center;color:var(--on-dark);font-family:var(--serif);font-size:30px}
+.story{display:grid;grid-template-columns:260px 1fr;gap:36px;align-items:center;max-width:900px}
+.story img,.story .ph-box{width:100%;aspect-ratio:4/5;max-width:100%;object-fit:cover;border-radius:18px;background:var(--teal)}
+.story h2{font-size:clamp(32px,4.6vw,44px)}
+.story p{margin-top:14px;color:var(--muted);font-size:17.5px}
+.story .sig{margin-top:18px;font-family:var(--serif);font-size:24px;color:var(--teal)}
 .trust img,.avatar-fallback{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:center 20%;background:var(--teal);flex:none}
 .avatar-fallback{display:grid;place-items:center;color:var(--on-dark);font-family:var(--serif);font-size:22px}
 .trust p{font-size:15px;color:var(--muted)}
@@ -173,21 +182,14 @@ footer{border-top:1px solid var(--line);padding-block:30px 24px;font-size:13px;c
 footer .tl{font-family:var(--serif);font-size:22px;color:var(--teal);line-height:1.2;margin-bottom:12px}
 footer p+p{margin-top:6px}
 
-/* Sticky WhatsApp */
-.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(251,248,242,.97);border-top:1px solid var(--line);padding:10px max(18px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));display:flex;gap:10px;align-items:center}
-.dock .btn{margin:0;min-height:50px}
-.dock .who{display:none}
 
-@media (min-width:900px){
-  body{padding-bottom:0}
-  .dock{left:auto;right:max(24px,env(safe-area-inset-right,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));border:0;background:none;padding:0}
-  .dock .btn{width:auto;padding:0 22px;box-shadow:0 12px 30px -12px rgba(21,36,31,.5)}
-}
 @media (max-width:899px){
   .hero .wrap{grid-template-columns:1fr;gap:22px;padding-block:6px 40px}
   .hero h1{font-size:clamp(40px,11vw,54px);margin-top:10px}
   .lede{font-size:17px;margin-top:12px}
-  .tagline,.trust.desk{display:none}
+  .tagline{display:none}
+  .story{grid-template-columns:1fr;gap:20px}
+  .story img,.story .ph-box{aspect-ratio:4/3;object-position:center 25%}
   .blocks{grid-template-columns:1fr 1fr}
   .reviews{grid-template-columns:1fr}
   section{padding-block:44px}
@@ -195,6 +197,9 @@ footer p+p{margin-top:6px}
 @media (max-width:600px){
   .blocks{grid-template-columns:1fr}
   .card{padding:20px 18px;border-radius:18px}
+  .card-photo{margin:-20px -18px 16px;border-radius:18px 18px 0 0;aspect-ratio:2/1}
+  .lede{font-size:16.5px}
+  .trust{margin-top:14px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 </style>
@@ -215,24 +220,24 @@ footer p+p{margin-top:6px}
   <div class="hero">
     <div class="wrap">
       <div>
-        <p class="eyebrow" data-ms="Punggol &amp; Sengkang · Ejen suami isteri">Punggol &amp; Sengkang · Husband-and-wife agents</p>
-        <h1 data-ms="Berapa harga flat <em>dekat rumah anda</em> dijual?">What did flats <em>near you</em> sell for?</h1>
-        <p class="lede" data-ms="Beritahu kami jenis flat anda. Kami tunjukkan julat harga terkini serta-merta, dan WhatsApp anda jualan di blok anda sendiri hari ini.">Tell us your flat. See the latest price range instantly, and we'll WhatsApp you the sales in your own block today.</p>
+        <p class="eyebrow" data-ms="Assalamualaikum, kami Andik &amp; Mirta">Hi, we're Andik &amp; Mirta</p>
+        <h1 data-ms="Nak jual flat? Jom tengok <em>angka sebenar</em> dulu.">Thinking of selling? Let's look at the <em>real numbers</em> first.</h1>
+        <p class="lede" data-ms="Kami pasangan suami isteri di PropNex, dan kami tinggal berdekatan. Beritahu kami jenis flat anda. Anda terus nampak harga jualan terkini, kemudian salah seorang daripada kami akan WhatsApp anda sendiri dengan jualan di blok anda.">We're a husband-and-wife team at PropNex, and we live nearby. Tell us about your flat. You'll see recent sale prices straight away, and one of us will WhatsApp you personally with sales in your own block.</p>
         <p class="tagline">Your home, in the right hands.<i>Aimed at what's best for your family.</i></p>
-        <div class="trust desk">
-          <img src="img/andik-mirta.png" alt="Andik and Mirta" onerror="this.outerHTML='&lt;div class=&quot;avatar-fallback&quot; aria-hidden=&quot;true&quot;&gt;A&amp;M&lt;/div&gt;'">
+        <div class="trust">
           <p><b>Andik &amp; Mirta</b> · <span data-ms="CEA R061801F · R070524E">CEA R061801F · R070524E</span><br><span class="stars" aria-hidden="true">★★★★★</span> <span data-ms="65+ ulasan Google">65+ Google reviews</span></p>
         </div>
       </div>
 
       <div class="card" id="check" aria-live="polite">
+        <figure class="card-photo"><span class="ph-fallback" aria-hidden="true">Andik &amp; Mirta</span><img src="img/andik-mirta-wide.png" alt="Andik and Mirta" onerror="this.remove()"><figcaption>Andik &amp; Mirta · PropNex</figcaption></figure>
         <!-- Step 1 -->
         <div id="s1">
           <div class="card-head">
-            <h2 data-ms="Semak harga flat">Flat price check</h2>
+            <h2 data-ms="Jom semak flat anda">Let's check your flat</h2>
             <span class="step-count" data-ms="Langkah 1 / 2">Step 1 of 2</span>
           </div>
-          <p class="sub" data-ms="Percuma. Dua soalan, 10 saat.">Free. Two taps, 10 seconds.</p>
+          <p class="sub" data-ms="Dua soalan ringkas. Percuma, tiada kewajipan.">Two quick questions. Free, no obligation.</p>
           <fieldset>
             <legend data-ms="Kawasan">Town</legend>
             <div class="chips">
@@ -256,10 +261,10 @@ footer p+p{margin-top:6px}
         <!-- Step 2 -->
         <form id="s2" hidden novalidate>
           <div class="card-head">
-            <h2 data-ms="Ke mana kami hantar?">Where do we send it?</h2>
+            <h2 data-ms="Siapa yang kami hubungi?">Who should we WhatsApp?</h2>
             <span class="step-count" data-ms="Langkah 2 / 2">Step 2 of 2</span>
           </div>
-          <p class="sub" data-ms="Julat harga akan dipaparkan sebaik anda tekan butang.">Your price range shows as soon as you tap the button.</p>
+          <p class="sub" data-ms="Julat harga keluar sebaik anda tekan butang. Andik atau Mirta akan susuli sendiri.">Your price range shows right after you tap. Andik or Mirta will follow up personally.</p>
           <div class="field">
             <label for="name" data-ms="Nama">Name</label>
             <input id="name" name="name" autocomplete="given-name" required>
@@ -273,7 +278,7 @@ footer p+p{margin-top:6px}
             <input id="blk" name="blk" autocomplete="street-address" placeholder="e.g. 310B Punggol Walk" data-ms-ph="cth. 310B Punggol Walk">
           </div>
           <p class="err" id="err" hidden></p>
-          <button class="btn" type="submit" id="submit" data-ms="Tunjukkan julat harga saya">Show my price range</button>
+          <button class="btn" type="submit" id="submit" data-ms="Tunjukkan harga">Show me the prices</button>
           <p class="fine" data-ms="Dengan menekan butang, anda bersetuju Andik atau Mirta menghubungi anda di WhatsApp tentang permintaan ini, selaras dengan PDPA. Tiada spam, tiada kewajipan.">By tapping the button, you agree that Andik or Mirta may contact you on WhatsApp about this request, in line with the PDPA. No spam, no obligation.</p>
           <p style="margin-top:12px"><button type="button" class="back" id="back" data-ms="← Ubah jawapan">← Change answers</button></p>
         </form>
@@ -298,12 +303,25 @@ footer p+p{margin-top:6px}
     <div class="wrap">
       <div class="sec-head">
         <p class="eyebrow" data-ms="Harga sebenar · 12 bulan lepas">Real prices · last 12 months</p>
-        <h2 data-ms="Jualan semula di blok yang lebih baru">Recent resales in newer blocks</h2>
-        <p data-ms="Blok yang pajakan bermula 2010 dan ke atas di Punggol dan Sengkang. Harga flat anda bergantung pada tingkat, keluasan, arah dan keadaan rumah. Itu yang kami semak untuk anda.">Punggol and Sengkang blocks with leases starting 2010 or later. Your flat's price depends on floor, size, facing and condition. That's what we check for you.</p>
+        <h2 data-ms="Apa yang jiran anda dapat tahun ini">What your neighbours sold for this year</h2>
+        <p data-ms="Ini blok yang lebih baru (pajakan dari 2010) di Punggol dan Sengkang. Dua flat di blok yang sama boleh berbeza puluhan ribu, ikut tingkat, arah dan keadaan. Sebab itu kami semak flat anda sendiri, bukan purata.">These are newer blocks (leases from 2010) in Punggol and Sengkang. Two flats in the same block can differ by tens of thousands, depending on floor, facing and condition. That's why we look at your flat, not an average.</p>
       </div>
       <div class="blocks" id="blocks"></div>
       <p class="source" data-ms="Sumber: data harga jualan semula flat HDB di data.gov.sg, permohonan berdaftar Nov 2025 hingga Okt 2026. Bilangan dalam kurungan ialah jumlah jualan. Ini harga lepas, bukan penilaian.">Source: HDB resale flat prices on data.gov.sg, registered Nov 2025 to Oct 2026. Numbers in brackets are how many sold. These are past prices, not a valuation.</p>
       <a class="btn" href="#check" data-ms="Semak harga flat saya">Check my flat's price</a>
+    </div>
+  </section>
+
+  <section id="story">
+    <div class="wrap story">
+      <div class="ph-box"><img src="img/andik-mirta.png" alt="Andik and Mirta" onerror="this.remove()" style="width:100%;height:100%;object-fit:cover;border-radius:18px"></div>
+      <div>
+        <p class="eyebrow" data-ms="Kisah kami">Our story</p>
+        <h2 data-ms="Kenapa kami bekerja berdua">Why we work as a couple</h2>
+        <p data-ms="Kami bermula sebagai dua ejen berasingan, masing-masing dengan cara berfikir sendiri. Bila kami jual rumah kami sendiri, Andik mahu flat HDB lebih besar dekat bandar. Mirta nampak pilihan lain. Berbincang berdua menjadikan keputusan kami lebih baik.">We started as two separate agents, each with our own way of thinking. When we sold our own home, Andik wanted a bigger HDB flat closer to town. Mirta saw another option. Talking it through together made our decision better.</p>
+        <p data-ms="Itulah yang kami bawa kepada keluarga anda: dua pandangan, satu pelan, dan tiada desakan. Anda boleh berbual dengan siapa yang anda lebih selesa.">That's what we bring to your family: two points of view, one plan, and no pressure. Talk to whichever of us you're more comfortable with.</p>
+        <p class="sig">Andik &amp; Mirta</p>
+      </div>
     </div>
   </section>
 
@@ -367,11 +385,11 @@ footer p+p{margin-top:6px}
       </details>
       <details>
         <summary data-ms="Saya belum pasti mahu jual. Boleh tanya dulu?">I'm not sure I want to sell yet. Can I still ask?</summary>
-        <p data-ms="Boleh. Ramai pelanggan kami bermula dengan semakan harga, kemudian merancang beberapa bulan kemudian. Kami tidak akan mendesak.">Yes. Many of our clients start with a price check and plan months later. We won't push you.</p>
+        <p data-ms="Boleh sangat. Ramai pelanggan kami mula dengan semak harga, dan buat keputusan beberapa bulan kemudian. Kami takkan desak. Janji.">Of course. Many of our clients start with a price check and decide months later. We won't push you. Promise.</p>
       </details>
       <details>
         <summary data-ms="Rumah pusaka, pentadbiran harta atau perceraian. Boleh bantu?">Inherited flat, estate administration or divorce. Can you help?</summary>
-        <p data-ms="Ya. Kami uruskan jualan dan proses HDB, dan bekerjasama dengan peguam anda untuk bahagian undang-undang.">Yes. We handle the sale and the HDB process, and work with your lawyer on the legal side.</p>
+        <p data-ms="Ya. Kami tahu urusan ini melibatkan perasaan ramai orang. Kami uruskan jualan dan proses HDB dengan tenang, dan bekerjasama dengan peguam anda untuk bahagian undang-undang.">Yes. We know these sales involve a lot of feelings. We handle the sale and the HDB process calmly, and work with your lawyer on the legal side.</p>
       </details>
       <details>
         <summary data-ms="Adakah maklumat saya dirahsiakan?">Is my information private?</summary>
@@ -390,12 +408,6 @@ footer p+p{margin-top:6px}
   </div>
 </footer>
 
-<div class="dock">
-  <a class="btn wa js-wa" id="dockWa" href="https://wa.me/6585685643" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.7-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.2-.2-.5-.3Z"/></svg>
-    <span data-ms="WhatsApp Andik &amp; Mirta">WhatsApp Andik &amp; Mirta</span>
-  </a>
-</div>
 
 <script>
 (function(){
@@ -433,17 +445,17 @@ footer p+p{margin-top:6px}
   /* ===== TEXT ===== */
   var T = {
     en:{type:{"3 ROOM":"3-room","4 ROOM":"4-room","5 ROOM":"5-room","EXECUTIVE":"Executive"}, sales:function(n){return n+(n===1?" sale":" sales")},
-        lease:"Lease ", sold:"SOLD", resLabel:function(t,f){return t+" "+f+" · last 12 months"},
-        resNote:function(m,n){return "8 in 10 sold in this range. Middle price $"+m+"k, from "+n+" sales."},
-        resNext:function(nm){return "<b>Thanks"+(nm?", "+nm:"")+".</b> Andik or Mirta will WhatsApp you today with recent sales in your own block, and what you'd have in cash after the sale."},
+        lease:"Lease ", sold:"SOLD", resLabel:function(t,f){return t+" "+f+"s sold in the last 12 months"},
+        resNote:function(m,n){return "8 in 10 sold between these prices. The middle was $"+m+"k, across "+n+" sales."},
+        resNext:function(nm){return "<b>Thanks"+(nm?", "+nm:"")+"!</b> That's the whole town. Your own price depends on your block, floor and condition, so one of us will WhatsApp you today with sales in your block, and roughly what you'd have in cash after selling.<br><span style=\"font-family:var(--serif);font-size:20px;color:var(--teal)\">Andik &amp; Mirta</span>"},
         otherLabel:"Your area", otherRange:"We'll check it for you", otherNote:"We have the latest HDB sales for every town.",
         errName:"Please enter your name.", errMobile:"Please enter an 8-digit Singapore mobile number starting with 8 or 9.", sending:"Sending…",
         waGeneric:"Hi Andik & Mirta, I'd like to know what my flat could sell for.",
         waLead:function(d){return "Hi Andik & Mirta, I'd like a price check.\nName: "+d.name+"\nTown: "+d.town+"\nFlat: "+d.typeLabel+(d.blk?"\nBlock: "+d.blk:"")}},
     ms:{type:{"3 ROOM":"3-bilik","4 ROOM":"4-bilik","5 ROOM":"5-bilik","EXECUTIVE":"Eksekutif"}, sales:function(n){return n+" jualan"},
-        lease:"Pajakan ", sold:"TERJUAL", resLabel:function(t,f){return t+" "+f+" · 12 bulan lepas"},
-        resNote:function(m,n){return "8 daripada 10 dijual dalam julat ini. Harga tengah $"+m+"k, daripada "+n+" jualan."},
-        resNext:function(nm){return "<b>Terima kasih"+(nm?", "+nm:"")+".</b> Andik atau Mirta akan WhatsApp anda hari ini dengan jualan terkini di blok anda, dan anggaran wang tunai selepas jualan."},
+        lease:"Pajakan ", sold:"TERJUAL", resLabel:function(t,f){return f+" di "+t+" yang dijual 12 bulan lepas"},
+        resNote:function(m,n){return "8 daripada 10 dijual antara harga ini. Harga tengah $"+m+"k, daripada "+n+" jualan."},
+        resNext:function(nm){return "<b>Terima kasih"+(nm?", "+nm:"")+"!</b> Ini harga untuk seluruh kawasan. Harga flat anda bergantung pada blok, tingkat dan keadaan rumah, jadi salah seorang daripada kami akan WhatsApp anda hari ini dengan jualan di blok anda, dan anggaran wang tunai selepas jual.<br><span style=\"font-family:var(--serif);font-size:20px;color:var(--teal)\">Andik &amp; Mirta</span>"},
         otherLabel:"Kawasan anda", otherRange:"Kami akan semak untuk anda", otherNote:"Kami ada data jualan HDB terkini untuk setiap kawasan.",
         errName:"Sila masukkan nama anda.", errMobile:"Sila masukkan nombor telefon Singapura 8 digit bermula dengan 8 atau 9.", sending:"Menghantar…",
         waGeneric:"Assalamualaikum Andik & Mirta, saya nak tahu berapa harga flat saya boleh dijual.",
@@ -482,7 +494,6 @@ footer p+p{margin-top:6px}
     document.documentElement.lang = l === "ms" ? "ms" : "en";
     document.querySelectorAll("[data-lang]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === l)); });
     renderBlocks();
-    setWa(T[l].waGeneric, "dockWa");
     if (!$("s3").hidden && last) showResult(last);
     try { localStorage.setItem("aims-lang", l); } catch(e){}
   }
