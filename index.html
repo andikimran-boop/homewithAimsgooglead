@@ -34,6 +34,7 @@
   color-scheme: light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%;display:block}
@@ -110,6 +111,34 @@ legend{font-size:15px;font-weight:700;padding:0;margin-bottom:9px}
 .fine{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.45}
 .err{color:var(--err);font-size:14px;margin-top:8px}
 .back{background:none;border:0;padding:0;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* Wizard */
+.wiz-top h2{font-size:30px}
+.stack{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:4px;font-size:15px;color:var(--muted)}
+.stack li::before{content:"✓";color:var(--terra);font-weight:700;margin-right:8px}
+.step{margin-top:20px;display:grid;gap:10px;animation:rise .28s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.row-in{display:grid;grid-template-columns:1fr auto;gap:8px}
+.row-in .btn.go{margin:0;width:auto;min-height:56px;padding:0 20px}
+.found{font-size:15px;color:var(--teal);font-weight:600;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.found .muted{color:var(--muted);font-weight:500}
+.found button{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;text-underline-offset:3px;font-size:14px;cursor:pointer}
+.opts.grid2{grid-template-columns:1fr 1fr}
+.qt{font-family:var(--serif);font-size:27px;line-height:1.15;display:block}
+.qh{font-size:14.5px;color:var(--muted);margin-top:-4px}
+input.big{width:100%;min-height:56px;padding:0 16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-size:20px;letter-spacing:.04em}
+input.big:focus{border-color:var(--teal);outline:none}
+.phone.big{min-height:56px}.phone.big input{font-size:20px;min-height:56px;padding:0 14px;letter-spacing:.04em;width:100%}
+.q .btn{margin-top:6px}
+.opts{display:grid;gap:8px}
+.opt{width:100%;min-height:50px;text-align:left;padding:0 16px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-size:16.5px;font-weight:600;cursor:pointer;transition:border-color .15s,background .15s}
+.opt:hover,.opt[aria-pressed="true"]{border-color:var(--teal);background:#E7F0EE;color:var(--teal)}
+#back{margin-top:14px}
+.thanks{text-align:center;padding:16px 4px 8px;display:grid;gap:12px;justify-items:center}
+.thanks .tick{width:64px;height:64px;border-radius:50%;background:#E7F0EE;color:var(--teal);display:grid;place-items:center;font-size:30px;font-weight:700}
+.thanks h2{font-size:34px}
+.thanks p{color:var(--muted);max-width:26em}
+.thanks .sig{font-family:var(--serif);font-size:24px;color:var(--teal)}
 
 /* Result */
 .result .label{font-size:14px;font-weight:700;color:var(--teal);letter-spacing:.04em}
@@ -202,7 +231,7 @@ footer p+p{margin-top:6px}
   .lede{font-size:16.5px}
   .trust{margin-top:14px}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -223,7 +252,7 @@ footer p+p{margin-top:6px}
       <div>
         <p class="eyebrow" data-ms="Assalamualaikum, kami Andik &amp; Mirta">Hi, we're Andik &amp; Mirta</p>
         <h1 data-ms="Nak jual flat? Jom tengok <em>angka sebenar</em> dulu.">Thinking of selling? Let's look at the <em>real numbers</em> first.</h1>
-        <p class="lede" data-ms="Kami pasangan suami isteri di PropNex, dan kami tinggal berdekatan. Beritahu kami jenis flat anda. Anda terus nampak harga jualan terkini, kemudian salah seorang daripada kami akan WhatsApp anda sendiri dengan jualan di blok anda.">We're a husband-and-wife team at PropNex, and we live nearby. Tell us about your flat. You'll see recent sale prices straight away, and one of us will WhatsApp you personally with sales in your own block.</p>
+        <p class="lede" data-ms="Dua flat 4-bilik di blok Northshore yang sama dijual dengan beza <b>$140,000</b> tahun ini. Flat anda di hujung yang mana? Jawab beberapa soalan ringkas, dan kami akan WhatsApp anda jualan terkini di blok anda.">Two 4-room flats in the same Northshore block sold <b>$140,000 apart</b> this year. Which end is yours? Answer a few quick questions and we'll WhatsApp you the latest sales in your own block.</p>
         <p class="tagline">Your home, in the right hands.<i>Aimed at what's best for your family.</i></p>
         <div class="trust">
           <p><b>Andik &amp; Mirta</b> · <span data-ms="CEA R061801F · R070524E">CEA R061801F · R070524E</span><br><span class="stars" aria-hidden="true">★★★★★</span> <span data-ms="65+ ulasan Google">65+ Google reviews</span></p>
@@ -231,69 +260,78 @@ footer p+p{margin-top:6px}
       </div>
 
       <div class="card" id="check" aria-live="polite">
-        <!-- Step 1 -->
-        <div id="s1">
-          <div class="card-head">
-            <h2 data-ms="Jom semak flat anda">Let's check your flat</h2>
-            <span class="step-count" data-ms="Langkah 1 / 2">Step 1 of 2</span>
+        <div id="wiz">
+          <div class="wiz-top">
+            <h2 data-ms="Semakan jualan percuma">Free sale check</h2>
+            <ul class="stack" id="stack">
+              <li data-ms="Jualan terkini di blok anda, dihantar di WhatsApp">Recent sales in your own block, sent on WhatsApp</li>
+              <li data-ms="Anggaran wang tunai selepas jual">Roughly how much cash you'd keep after selling</li>
+              <li data-ms="Tiada kewajipan untuk melantik kami">No obligation to list with us</li>
+            </ul>
           </div>
-          <p class="sub" data-ms="Dua soalan ringkas. Percuma, tiada kewajipan.">Two quick questions. Free, no obligation.</p>
-          <fieldset>
-            <legend data-ms="Kawasan">Town</legend>
-            <div class="chips">
-              <label class="chip"><input type="radio" name="town" value="Punggol" id="t-pg"><span>Punggol</span></label>
-              <label class="chip"><input type="radio" name="town" value="Sengkang" id="t-sk"><span>Sengkang</span></label>
-              <label class="chip"><input type="radio" name="town" value="Other" id="t-ot"><span data-ms="Kawasan lain">Elsewhere</span></label>
+
+          <form id="form" novalidate>
+            <!-- Postal code -->
+            <div class="step" id="st-postal">
+              <label class="qt" for="postal" data-ms="Apakah poskod rumah anda?">What's your postal code?</label>
+              <div class="row-in">
+                <input class="big" id="postal" name="postal" inputmode="numeric" autocomplete="postal-code" maxlength="6" placeholder="e.g. 822310" data-ms-ph="cth. 822310">
+                <button class="btn go" type="button" id="findBtn" data-ms="Cari">Find</button>
+              </div>
+              <p class="found" id="found" hidden></p>
             </div>
-          </fieldset>
-          <fieldset>
-            <legend data-ms="Jenis flat">Flat type</legend>
-            <div class="chips">
-              <label class="chip"><input type="radio" name="type" value="3 ROOM" id="f-3"><span data-ms="3-bilik">3-room</span></label>
-              <label class="chip"><input type="radio" name="type" value="4 ROOM" id="f-4"><span data-ms="4-bilik">4-room</span></label>
-              <label class="chip"><input type="radio" name="type" value="5 ROOM" id="f-5"><span data-ms="5-bilik">5-room</span></label>
-              <label class="chip"><input type="radio" name="type" value="EXECUTIVE" id="f-e"><span data-ms="Eksekutif">Executive</span></label>
+
+            <!-- Property type (only when we can't tell, or they change it) -->
+            <div class="step" id="st-kind" hidden>
+              <p class="qt" data-ms="Jenis hartanah?">What type of property is it?</p>
+              <div class="opts">
+                <button type="button" class="opt" data-field="kind" data-val="HDB" data-ms="Flat HDB">HDB flat</button>
+                <button type="button" class="opt" data-field="kind" data-val="Condo" data-ms="Kondo / EC">Condo / EC</button>
+                <button type="button" class="opt" data-field="kind" data-val="Landed" data-ms="Rumah landed">Landed home</button>
+              </div>
             </div>
-          </fieldset>
-          <button class="btn" type="button" id="toS2" disabled><span data-ms="Seterusnya">Next</span> →</button>
+
+            <!-- Unit type: filled by script for HDB / condo / landed -->
+            <div class="step" id="st-type" hidden>
+              <p class="qt" id="typeQ"></p>
+              <div class="opts" id="typeOpts"></div>
+            </div>
+
+            <!-- Unit number -->
+            <div class="step" id="st-unit" hidden>
+              <label class="qt" for="unit" data-ms="Nombor unit anda?">What's your unit number?</label>
+              <div class="row-in">
+                <input class="big" id="unit" name="unit" autocomplete="address-line2" placeholder="e.g. #12-345" data-ms-ph="cth. #12-345">
+                <button class="btn go" type="button" data-next="unit" data-ms="OK">OK</button>
+              </div>
+            </div>
+
+            <!-- Name -->
+            <div class="step" id="st-name" hidden>
+              <label class="qt" for="name" data-ms="Siapa nama anda?">What's your name?</label>
+              <div class="row-in">
+                <input class="big" id="name" name="name" autocomplete="given-name">
+                <button class="btn go" type="button" data-next="name" data-ms="OK">OK</button>
+              </div>
+            </div>
+
+            <!-- Mobile -->
+            <div class="step" id="st-mobile" hidden>
+              <label class="qt" for="mobile" data-ms="Nombor WhatsApp anda?">What's your WhatsApp number?</label>
+              <div class="phone big"><span>+65</span><input id="mobile" name="mobile" inputmode="numeric" autocomplete="tel-national" placeholder="8123 4567" maxlength="9"></div>
+              <button class="btn" type="submit" data-ms="Hantar">Send</button>
+              <p class="fine" data-ms="Dengan menekan Hantar, anda bersetuju Andik atau Mirta menghubungi anda di WhatsApp tentang permintaan ini, selaras dengan PDPA. Tiada spam.">By tapping Send, you agree that Andik or Mirta may contact you on WhatsApp about this request, in line with the PDPA. No spam.</p>
+            </div>
+            <p class="err" id="err" hidden></p>
+          </form>
         </div>
 
-        <!-- Step 2 -->
-        <form id="s2" hidden novalidate>
-          <div class="card-head">
-            <h2 data-ms="Siapa yang kami hubungi?">Who should we WhatsApp?</h2>
-            <span class="step-count" data-ms="Langkah 2 / 2">Step 2 of 2</span>
-          </div>
-          <p class="sub" data-ms="Julat harga keluar sebaik anda tekan butang. Andik atau Mirta akan susuli sendiri.">Your price range shows right after you tap. Andik or Mirta will follow up personally.</p>
-          <div class="field">
-            <label for="name" data-ms="Nama">Name</label>
-            <input id="name" name="name" autocomplete="given-name" required>
-          </div>
-          <div class="field">
-            <label for="mobile" data-ms="Nombor WhatsApp">WhatsApp number</label>
-            <div class="phone"><span>+65</span><input id="mobile" name="mobile" inputmode="numeric" autocomplete="tel-national" placeholder="8123 4567" maxlength="9" required></div>
-          </div>
-          <div class="field">
-            <label for="blk"><span data-ms="Blok &amp; jalan">Block &amp; street</span> <small data-ms="(pilihan)">(optional)</small></label>
-            <input id="blk" name="blk" autocomplete="street-address" placeholder="e.g. 310B Punggol Walk" data-ms-ph="cth. 310B Punggol Walk">
-          </div>
-          <p class="err" id="err" hidden></p>
-          <button class="btn" type="submit" id="submit" data-ms="Tunjukkan harga">Show me the prices</button>
-          <p class="fine" data-ms="Dengan menekan butang, anda bersetuju Andik atau Mirta menghubungi anda di WhatsApp tentang permintaan ini, selaras dengan PDPA. Tiada spam, tiada kewajipan.">By tapping the button, you agree that Andik or Mirta may contact you on WhatsApp about this request, in line with the PDPA. No spam, no obligation.</p>
-          <p style="margin-top:12px"><button type="button" class="back" id="back" data-ms="← Ubah jawapan">← Change answers</button></p>
-        </form>
-
-        <!-- Result -->
-        <div id="s3" class="result" hidden>
-          <p class="label" id="rLabel"></p>
-          <p class="range num" id="rRange"></p>
-          <p class="range-note num" id="rNote"></p>
-          <p class="next" id="rNext"></p>
-          <a class="btn wa js-wa" id="rWa" href="https://wa.me/6585685643" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.7-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.2-.2-.5-.3Z"/></svg>
-            <span data-ms="Tak sabar? WhatsApp kami sekarang">Can't wait? WhatsApp us now</span>
-          </a>
-          <button class="btn ghost" type="button" id="again" data-ms="Semak flat lain">Check another flat</button>
+        <!-- Thank you -->
+        <div id="thanks" class="thanks" hidden>
+          <div class="tick" aria-hidden="true">✓</div>
+          <h2 id="tyTitle"></h2>
+          <p data-ms="Kami sudah terima butiran anda. Andik atau Mirta akan WhatsApp anda dalam masa 24 jam dengan jualan terkini di blok anda.">We've got your details. Andik or Mirta will WhatsApp you within 24 hours with the latest sales in your block.</p>
+          <p class="sig">Andik &amp; Mirta</p>
         </div>
       </div>
     </div>
@@ -420,11 +458,6 @@ footer p+p{margin-top:6px}
   var LEAD_WEBHOOK = "https://hook.eu1.make.com/r2xwq6c4xa2bv7gpruswla6e7w3pw9v8";
 
   /* ===== DATA: HDB resale, registered Nov 2025 – Oct 2026 (data.gov.sg) ===== */
-  // Town ranges, all blocks: p10–p90 (8 in 10 sales), median, number of sales. In S$ thousands.
-  var TOWN = {
-    Punggol:  {"3 ROOM":[510,598,545,184],"4 ROOM":[597,775,680,865],"5 ROOM":[628,960,790,493],"EXECUTIVE":[768,860,825,22]},
-    Sengkang: {"3 ROOM":[505,575,543,133],"4 ROOM":[560,761,640,863],"5 ROOM":[620,870,700,603],"EXECUTIVE":[795,925,845,117]}
-  };
   // Six newer blocks (lease from 2010). [type, min, max, sales] in S$ thousands.
   var BLOCKS = [
     {town:"Punggol", blk:"422A Northshore Dr", lease:2021, rows:[["4 ROOM",708,848,7],["5 ROOM",880,1100,14]]},
@@ -446,21 +479,25 @@ footer p+p{margin-top:6px}
   /* ===== TEXT ===== */
   var T = {
     en:{type:{"3 ROOM":"3-room","4 ROOM":"4-room","5 ROOM":"5-room","EXECUTIVE":"Executive"}, sales:function(n){return n+(n===1?" sale":" sales")},
-        lease:"Lease ", sold:"SOLD", resLabel:function(t,f){return t+" "+f+"s sold in the last 12 months"},
-        resNote:function(m,n){return "8 in 10 sold between these prices. The middle was $"+m+"k, across "+n+" sales."},
-        resNext:function(nm){return "<b>Thanks"+(nm?", "+nm:"")+"!</b> That's the whole town. Your own price depends on your block, floor and condition, so one of us will WhatsApp you today with sales in your block, and roughly what you'd have in cash after selling.<br><span style=\"font-family:var(--serif);font-size:20px;color:var(--teal)\">Andik &amp; Mirta</span>"},
-        otherLabel:"Your area", otherRange:"We'll check it for you", otherNote:"We have the latest HDB sales for every town.",
-        errName:"Please enter your name.", errMobile:"Please enter an 8-digit Singapore mobile number starting with 8 or 9.", sending:"Sending…",
-        waGeneric:"Hi Andik & Mirta, I'd like to know what my flat could sell for.",
-        waLead:function(d){return "Hi Andik & Mirta, I'd like a price check.\nName: "+d.name+"\nTown: "+d.town+"\nFlat: "+d.typeLabel+(d.blk?"\nBlock: "+d.blk:"")}},
+        lease:"Lease ", sold:"SOLD", ty:function(nm){return "Thank you, "+nm+"!"},
+        qHdb:"What type of flat is it?", qCondo:"How many bedrooms?", qLanded:"What type of landed home?",
+        hdb:{"2 ROOM":"2-room","3 ROOM":"3-room","4 ROOM":"4-room","5 ROOM":"5-room","EA":"Executive Apartment","EM":"Executive Maisonette (EM)","EC":"Executive Condo (EC)","OTHER":"Other"},
+        condo:{"1BR":"1-bedroom","2BR":"2-bedroom","3BR":"3-bedroom","4BR":"4-bedroom","5BR":"5-bedroom or more"},
+        landed:{"Terrace":"Terrace","Corner terrace":"Corner terrace","Semi-D":"Semi-detached","Bungalow":"Bungalow","Cluster":"Cluster house"},
+        kind:{HDB:"HDB flat",Condo:"Condo / EC",Landed:"Landed home"},
+        checking:"Checking your address…", notRight:"Not right? Change", notFound:"We couldn't find that postal code. Please choose your property type.",
+        errPostal:"Please enter your 6-digit postal code.", errUnit:"Please enter your unit number, e.g. #12-345.", errName:"Please enter your name.", errMobile:"Please enter an 8-digit Singapore mobile number starting with 8 or 9.",
+        waLead:function(d){return "Hi Andik & Mirta, I'd like a sale check.\nName: "+d.name+"\nAddress: "+d.address+" "+d.unit+" (S"+d.postal+")\nProperty: "+d.property+" "+d.unitType}},
     ms:{type:{"3 ROOM":"3-bilik","4 ROOM":"4-bilik","5 ROOM":"5-bilik","EXECUTIVE":"Eksekutif"}, sales:function(n){return n+" jualan"},
-        lease:"Pajakan ", sold:"TERJUAL", resLabel:function(t,f){return f+" di "+t+" yang dijual 12 bulan lepas"},
-        resNote:function(m,n){return "8 daripada 10 dijual antara harga ini. Harga tengah $"+m+"k, daripada "+n+" jualan."},
-        resNext:function(nm){return "<b>Terima kasih"+(nm?", "+nm:"")+"!</b> Ini harga untuk seluruh kawasan. Harga flat anda bergantung pada blok, tingkat dan keadaan rumah, jadi salah seorang daripada kami akan WhatsApp anda hari ini dengan jualan di blok anda, dan anggaran wang tunai selepas jual.<br><span style=\"font-family:var(--serif);font-size:20px;color:var(--teal)\">Andik &amp; Mirta</span>"},
-        otherLabel:"Kawasan anda", otherRange:"Kami akan semak untuk anda", otherNote:"Kami ada data jualan HDB terkini untuk setiap kawasan.",
-        errName:"Sila masukkan nama anda.", errMobile:"Sila masukkan nombor telefon Singapura 8 digit bermula dengan 8 atau 9.", sending:"Menghantar…",
-        waGeneric:"Assalamualaikum Andik & Mirta, saya nak tahu berapa harga flat saya boleh dijual.",
-        waLead:function(d){return "Assalamualaikum Andik & Mirta, saya nak semakan harga.\nNama: "+d.name+"\nKawasan: "+d.town+"\nFlat: "+d.typeLabel+(d.blk?"\nBlok: "+d.blk:"")}}
+        lease:"Pajakan ", sold:"TERJUAL", ty:function(nm){return "Terima kasih, "+nm+"!"},
+        qHdb:"Jenis flat anda?", qCondo:"Berapa bilik tidur?", qLanded:"Jenis rumah landed?",
+        hdb:{"2 ROOM":"2-bilik","3 ROOM":"3-bilik","4 ROOM":"4-bilik","5 ROOM":"5-bilik","EA":"Eksekutif (EA)","EM":"Eksekutif Maisonette (EM)","EC":"Kondo Eksekutif (EC)","OTHER":"Lain-lain"},
+        condo:{"1BR":"1 bilik","2BR":"2 bilik","3BR":"3 bilik","4BR":"4 bilik","5BR":"5 bilik atau lebih"},
+        landed:{"Terrace":"Teres","Corner terrace":"Teres hujung","Semi-D":"Semi-D","Bungalow":"Banglo","Cluster":"Rumah kluster"},
+        kind:{HDB:"Flat HDB",Condo:"Kondo / EC",Landed:"Rumah landed"},
+        checking:"Sedang semak alamat anda…", notRight:"Salah? Tukar", notFound:"Kami tak jumpa poskod itu. Sila pilih jenis hartanah anda.",
+        errPostal:"Sila masukkan poskod 6 digit anda.", errUnit:"Sila masukkan nombor unit anda, cth. #12-345.", errName:"Sila masukkan nama anda.", errMobile:"Sila masukkan nombor telefon Singapura 8 digit bermula dengan 8 atau 9.",
+        waLead:function(d){return "Assalamualaikum Andik & Mirta, saya nak semakan jualan.\nNama: "+d.name+"\nAlamat: "+d.address+" "+d.unit+" (S"+d.postal+")\nHartanah: "+d.property+" "+d.unitType}}
   };
 
   var lang = "en";
@@ -487,15 +524,17 @@ footer p+p{margin-top:6px}
   /* ===== Language ===== */
   var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-ms]"));
   nodes.forEach(function(n){ n.setAttribute("data-en", n.innerHTML); });
-  var blkInput = $("blk"); blkInput.setAttribute("data-en-ph", blkInput.placeholder);
+  var phInputs = Array.prototype.slice.call(document.querySelectorAll("[data-ms-ph]"));
+  phInputs.forEach(function(i){ i.setAttribute("data-en-ph", i.placeholder); });
   function setLang(l){
     lang = l;
     nodes.forEach(function(n){ n.innerHTML = n.getAttribute(l === "ms" ? "data-ms" : "data-en"); });
-    blkInput.placeholder = blkInput.getAttribute(l === "ms" ? "data-ms-ph" : "data-en-ph");
+    phInputs.forEach(function(i){ i.placeholder = i.getAttribute(l === "ms" ? "data-ms-ph" : "data-en-ph"); });
     document.documentElement.lang = l === "ms" ? "ms" : "en";
     document.querySelectorAll("[data-lang]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === l)); });
     renderBlocks();
-    if (!$("s3").hidden && last) showResult(last);
+    refreshLang();
+    if (!$("thanks").hidden && last) $("tyTitle").textContent = T[l].ty(last.name);
     try { localStorage.setItem("aims-lang", l); } catch(e){}
   }
   document.querySelectorAll("[data-lang]").forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); }); });
@@ -504,63 +543,173 @@ footer p+p{margin-top:6px}
   function convert(label, sendTo){
     try { if (window.gtag) { gtag("event","conversion",{send_to:sendTo}); gtag("event", label); } } catch(e){}
   }
-  function setWa(text, id){ $(id).href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(text); }
   document.querySelectorAll(".js-wa").forEach(function(a){ a.addEventListener("click", function(){ convert("whatsapp_click", SEND_TO_WHATSAPP); }); });
 
-  /* ===== Form flow ===== */
-  var choice = {town:"", type:""}, last = null;
-  function pick(n){ var x = document.querySelector('input[name="'+n+'"]:checked'); return x ? x.value : ""; }
-  document.querySelectorAll('#s1 input').forEach(function(i){
-    i.addEventListener("change", function(){ choice.town = pick("town"); choice.type = pick("type"); $("toS2").disabled = !(choice.town && choice.type); });
-  });
-  $("toS2").addEventListener("click", function(){ $("s1").hidden = true; $("s2").hidden = false; $("name").focus(); });
-  $("back").addEventListener("click", function(){ $("s2").hidden = true; $("s1").hidden = false; });
-  $("again").addEventListener("click", function(){ $("s3").hidden = true; $("s1").hidden = false; document.querySelectorAll('#s1 input').forEach(function(i){ i.checked = false; }); $("toS2").disabled = true; });
+  /* ===== Form flow: each answer opens the next line ===== */
+  var st = {postal:"", address:"", property:"", unitType:"", hdbCounts:null, area:"Other"}, last = null;
+  function show(id){
+    var el = $(id); if (!el.hidden) return;
+    el.hidden = false;
+    var r = el.getBoundingClientRect();
+    if (r.bottom > window.innerHeight - 20) window.scrollBy({top: r.bottom - window.innerHeight + 40, behavior:"smooth"});
+    var i = el.querySelector("input"); if (i && !i.value) setTimeout(function(){ i.focus({preventScroll:true}); }, 120);
+  }
+  function hideFrom(ids){ ids.forEach(function(id){ $(id).hidden = true; }); }
+  function fail(msg, el){ var e = $("err"); e.textContent = msg; e.hidden = false; if (el) el.focus(); }
+  function clearErr(){ $("err").hidden = true; }
+  function digits(v){ return v.replace(/\D/g,""); }
+  function title(x){ return (x||"").toLowerCase().replace(/\b\w/g,function(c){return c.toUpperCase();}); }
 
-  function showResult(d){
-    var L = T[lang], typeLabel = L.type[d.type], tw = TOWN[d.town];
-    if (tw && tw[d.type]) {
-      var r = tw[d.type];
-      $("rLabel").textContent = L.resLabel(d.town, typeLabel);
-      $("rRange").textContent = fmt(r[0]) + " – " + fmt(r[1]);
-      $("rNote").textContent = L.resNote(r[2], r[3]);
-    } else {
-      $("rLabel").textContent = L.otherLabel + " · " + typeLabel;
-      $("rRange").textContent = L.otherRange;
-      $("rNote").textContent = L.otherNote;
-    }
-    $("rNext").innerHTML = L.resNext(d.name);
-    setWa(L.waLead({name:d.name, town:d.town, typeLabel:typeLabel, blk:d.blk}), "rWa");
+  function areaFromPostal(pc){
+    var two = pc.slice(0,2);
+    if (two === "82") return "Punggol";
+    if (two === "54" || two === "79") return "Sengkang";
+    return "Other";
+  }
+  function withTimeout(promise, ms){ return Promise.race([promise, new Promise(function(_, rej){ setTimeout(function(){ rej(new Error("timeout")); }, ms); })]); }
+
+  // 1) OneMap: postal code -> block, road, building
+  function oneMap(pc){
+    return withTimeout(fetch("https://www.onemap.gov.sg/api/common/elastic/search?searchVal="+pc+"&returnGeom=N&getAddrDetails=Y&pageNum=1").then(function(r){ return r.json(); }), 5000)
+      .then(function(j){ var x = (j.results || []).filter(function(r){ return r.POSTAL === pc; })[0] || (j.results || [])[0]; return x || null; });
+  }
+  // 2) HDB block register (data.gov.sg): is this block an HDB residential block? Which flat types does it have?
+  function hdbBlock(blk, road){
+    var f = encodeURIComponent(JSON.stringify({blk_no: blk}));
+    return withTimeout(fetch("https://data.gov.sg/api/action/datastore_search?resource_id=d_17f5382f26140b1fdae0ba2ef6239d2f&filters="+f+"&limit=100").then(function(r){ return r.json(); }), 5000)
+      .then(function(j){
+        var first = (road || "").split(" ")[0];
+        var hit = ((j.result && j.result.records) || []).filter(function(r){ return r.residential === "Y" && r.street.split(" ")[0] === first; })[0];
+        return hit || null;
+      });
   }
 
-  $("s2").addEventListener("submit", function(e){
+  function setKind(kind, counts){
+    st.property = kind; st.hdbCounts = counts || null; st.unitType = "";
+    var L = T[lang], keys, map, q;
+    if (kind === "HDB") {
+      map = L.hdb; q = L.qHdb;
+      if (counts) {
+        keys = [];
+        if (+counts["2room_sold"] > 0) keys.push("2 ROOM");
+        if (+counts["3room_sold"] > 0) keys.push("3 ROOM");
+        if (+counts["4room_sold"] > 0) keys.push("4 ROOM");
+        if (+counts["5room_sold"] > 0) keys.push("5 ROOM");
+        if (+counts["exec_sold"] > 0) { keys.push("EA"); keys.push("EM"); }
+        keys.push("OTHER");
+      } else keys = ["2 ROOM","3 ROOM","4 ROOM","5 ROOM","EA","EM","EC","OTHER"];
+    } else if (kind === "Condo") { map = L.condo; q = L.qCondo; keys = ["1BR","2BR","3BR","4BR","5BR"]; }
+    else { map = L.landed; q = L.qLanded; keys = ["Terrace","Corner terrace","Semi-D","Bungalow","Cluster"]; }
+    $("typeQ").textContent = q;
+    $("typeOpts").className = "opts" + (keys.length > 4 ? " grid2" : "");
+    $("typeOpts").innerHTML = keys.map(function(k){ return '<button type="button" class="opt" data-type="'+k+'">'+map[k]+'</button>'; }).join("");
+    $("typeOpts").querySelectorAll(".opt").forEach(function(b){
+      b.addEventListener("click", function(){
+        st.unitType = b.getAttribute("data-type");
+        $("typeOpts").querySelectorAll(".opt").forEach(function(o){ o.setAttribute("aria-pressed", String(o === b)); });
+        clearErr();
+        if (st.property === "Landed") { $("st-unit").hidden = true; show("st-name"); } else show("st-unit");
+      });
+    });
+    hideFrom(["st-unit","st-name","st-mobile"]);
+    show("st-type");
+  }
+
+  function foundLine(){
+    var L = T[lang];
+    if (!st.address) { $("found").hidden = true; return; }
+    $("found").innerHTML = '<span>'+st.address+'</span><span class="muted">· '+(L.kind[st.property] || "")+'</span><button type="button" id="changeKind">'+L.notRight+'</button>';
+    $("found").hidden = false;
+    $("changeKind").addEventListener("click", function(){ hideFrom(["st-type","st-unit","st-name","st-mobile"]); show("st-kind"); });
+  }
+
+  function lookup(){
+    var pc = digits($("postal").value);
+    if (!/^\d{6}$/.test(pc)) { fail(T[lang].errPostal, $("postal")); return; }
+    clearErr();
+    if (pc === st.postal && st.property) return;
+    st.postal = pc; st.area = areaFromPostal(pc); st.address = ""; st.property = "";
+    hideFrom(["st-kind","st-type","st-unit","st-name","st-mobile"]);
+    $("found").textContent = T[lang].checking; $("found").hidden = false;
+    oneMap(pc).then(function(x){
+      if (!x) throw new Error("none");
+      var blk = x.BLK_NO, road = x.ROAD_NAME, bld = x.BUILDING;
+      st.address = blk + " " + title(road) + (bld && bld !== "NIL" ? " (" + title(bld).replace(/\b(Ii|Iii|Iv)\b/g,function(m){return m.toUpperCase();}) + ")" : "");
+      return hdbBlock(blk, road).then(function(h){
+        if (h) setKind("HDB", h);
+        else if (bld && bld !== "NIL") setKind("Condo");
+        else setKind("Landed");
+        foundLine();
+      }, function(){
+        // HDB register unreachable: guess from postal code (HDB postal codes end in the block number)
+        var n = digits(blk);
+        if (n && pc.slice(-3) === ("000" + n).slice(-3)) setKind("HDB"); else if (bld && bld !== "NIL") setKind("Condo"); else setKind("Landed");
+        foundLine();
+      });
+    }).catch(function(){
+      st.address = "";
+      $("found").textContent = T[lang].notFound; $("found").hidden = false;
+      show("st-kind");
+    });
+  }
+  $("findBtn").addEventListener("click", lookup);
+  $("postal").addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); lookup(); } });
+  $("postal").addEventListener("input", function(){ if (digits(this.value).length === 6) lookup(); });
+
+  document.querySelectorAll('#st-kind .opt').forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll('#st-kind .opt').forEach(function(o){ o.setAttribute("aria-pressed", String(o === b)); });
+      $("st-kind").hidden = true;
+      setKind(b.getAttribute("data-val"));
+      if (st.address) foundLine();
+    });
+  });
+
+  function nextFrom(which){
+    var L = T[lang];
+    if (which === "unit") { if (!$("unit").value.trim()) { fail(L.errUnit, $("unit")); return; } clearErr(); show("st-name"); }
+    if (which === "name") { if (!$("name").value.trim()) { fail(L.errName, $("name")); return; } clearErr(); show("st-mobile"); }
+  }
+  document.querySelectorAll("[data-next]").forEach(function(b){ b.addEventListener("click", function(){ nextFrom(b.getAttribute("data-next")); }); });
+  ["unit","name"].forEach(function(id){
+    $(id).addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); nextFrom(id); } });
+  });
+
+  function refreshLang(){
+    if (st.property && !$("st-type").hidden) {
+      var keep = st.unitType; setKind(st.property, st.hdbCounts); st.unitType = keep;
+      $("typeOpts").querySelectorAll(".opt").forEach(function(o){ o.setAttribute("aria-pressed", String(o.getAttribute("data-type") === keep)); });
+      if (keep) { if (st.property !== "Landed") $("st-unit").hidden = false; if ($("unit").value.trim() || st.property === "Landed") $("st-name").hidden = false; if ($("name").value.trim()) $("st-mobile").hidden = false; }
+    }
+    foundLine();
+  }
+
+  $("form").addEventListener("submit", function(e){
     e.preventDefault();
-    var L = T[lang], err = $("err");
-    var name = $("name").value.trim();
-    var mobile = $("mobile").value.replace(/\D/g,"").replace(/^65(?=\d{8}$)/,"");
-    if (!name) { err.textContent = L.errName; err.hidden = false; $("name").focus(); return; }
-    if (!/^[89]\d{7}$/.test(mobile)) { err.textContent = L.errMobile; err.hidden = false; $("mobile").focus(); return; }
-    err.hidden = true;
-    var d = {name:name, mobile:mobile, town:choice.town, type:choice.type, blk:$("blk").value.trim()};
+    var L = T[lang];
+    var mobile = digits($("mobile").value).replace(/^65(?=\d{8}$)/,"");
+    if (!/^[89]\d{7}$/.test(mobile)) { fail(L.errMobile, $("mobile")); return; }
+    var typeLabel = st.property === "HDB" ? T.en.hdb[st.unitType] : st.property === "Condo" ? T.en.condo[st.unitType] : T.en.landed[st.unitType];
+    var d = {name:$("name").value.trim(), mobile:mobile, postal:st.postal, address:st.address, unit:$("unit").value.trim(),
+             property:st.property, unitType:typeLabel || "", area:st.area};
     last = d;
     convert("generate_lead", SEND_TO_FORM);
-
+    var stamp = new Date().toLocaleString("en-SG",{timeZone:"Asia/Singapore",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
     if (LEAD_WEBHOOK) {
       var body = new URLSearchParams({
-        name:d.name, mobile:"+65 "+d.mobile.slice(0,4)+" "+d.mobile.slice(4), town:d.town, flat_type:d.type, block:d.blk,
-        language:lang, page:location.href, submitted_at:new Date().toLocaleString("en-SG",{timeZone:"Asia/Singapore",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"})
+        submitted_at:stamp, name:d.name, mobile:mobile.slice(0,4)+" "+mobile.slice(4), wa_link:"https://wa.me/65"+mobile,
+        postal_code:d.postal, address:d.address, unit_no:d.unit, property:d.property, unit_type:d.unitType, area:d.area,
+        language:lang, page:location.href
       });
       try { fetch(LEAD_WEBHOOK, {method:"POST", mode:"no-cors", body:body}); } catch(x){}
-      showResult(d);
-      $("s2").hidden = true; $("s3").hidden = false;
-      $("check").scrollIntoView({block:"start", behavior:"smooth"});
     } else {
-      // No webhook yet: show the result and open WhatsApp with the details.
-      showResult(d);
-      $("s2").hidden = true; $("s3").hidden = false;
-      var a = document.createElement("a"); a.href = $("rWa").href; a.target = "_blank"; a.rel = "noopener";
+      var a = document.createElement("a");
+      a.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(L.waLead(d)); a.target = "_blank"; a.rel = "noopener";
       document.body.appendChild(a); a.click(); a.remove();
     }
+    $("tyTitle").textContent = L.ty(d.name);
+    $("wiz").hidden = true; $("thanks").hidden = false;
+    $("check").scrollIntoView({block:"start", behavior:"smooth"});
   });
 
   /* ===== Videos: load YouTube only when tapped ===== */
