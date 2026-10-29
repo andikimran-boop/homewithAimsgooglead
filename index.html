@@ -67,8 +67,9 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .card-photo img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
 .card-photo figcaption{position:absolute;left:12px;bottom:10px;background:rgba(21,36,31,.78);color:var(--on-dark);font-size:13px;font-weight:600;padding:5px 10px;border-radius:8px}
 .card-photo .ph-fallback{position:absolute;inset:0;display:grid;place-items:center;color:var(--on-dark);font-family:var(--serif);font-size:30px}
-.story{display:grid;grid-template-columns:260px 1fr;gap:36px;align-items:center;max-width:900px}
-.story img,.story .ph-box{width:100%;aspect-ratio:4/5;max-width:100%;object-fit:cover;border-radius:18px;background:var(--teal)}
+.story{display:grid;grid-template-columns:220px 1fr;gap:40px;align-items:start;max-width:900px}
+.story .ph-box{width:220px;max-width:100%;aspect-ratio:1/1;border-radius:50%;overflow:hidden;background:var(--teal);border:4px solid var(--paper);box-shadow:0 14px 30px -18px rgba(21,36,31,.6)}
+.story .ph-box img{width:100%;height:100%;object-fit:cover;object-position:center 18%;display:block}
 .story h2{font-size:clamp(32px,4.6vw,44px)}
 .story p{margin-top:14px;color:var(--muted);font-size:17.5px}
 .story .sig{margin-top:18px;font-family:var(--serif);font-size:24px;color:var(--teal)}
@@ -189,7 +190,7 @@ footer p+p{margin-top:6px}
   .lede{font-size:17px;margin-top:12px}
   .tagline{display:none}
   .story{grid-template-columns:1fr;gap:20px}
-  .story img,.story .ph-box{aspect-ratio:4/3;object-position:center 25%}
+  .story .ph-box{width:160px}
   .blocks{grid-template-columns:1fr 1fr}
   .reviews{grid-template-columns:1fr}
   section{padding-block:44px}
@@ -230,7 +231,6 @@ footer p+p{margin-top:6px}
       </div>
 
       <div class="card" id="check" aria-live="polite">
-        <figure class="card-photo"><span class="ph-fallback" aria-hidden="true">Andik &amp; Mirta</span><img src="img/andik-mirta-wide.png" alt="Andik and Mirta" onerror="this.remove()"><figcaption>Andik &amp; Mirta · PropNex</figcaption></figure>
         <!-- Step 1 -->
         <div id="s1">
           <div class="card-head">
@@ -314,7 +314,7 @@ footer p+p{margin-top:6px}
 
   <section id="story">
     <div class="wrap story">
-      <div class="ph-box"><img src="img/andik-mirta.png" alt="Andik and Mirta" onerror="this.remove()" style="width:100%;height:100%;object-fit:cover;border-radius:18px"></div>
+      <div class="ph-box"><img src="img/andik-mirta.png" alt="Andik and Mirta" onerror="this.remove()"></div>
       <div>
         <p class="eyebrow" data-ms="Kisah kami">Our story</p>
         <h2 data-ms="Kenapa kami bekerja berdua">Why we work as a couple</h2>
@@ -413,7 +413,8 @@ footer p+p{margin-top:6px}
 (function(){
   /* ===== SETTINGS ===== */
   var WA = "6585685643";
-  var SEND_TO = "AW-16974548722/P8yiCLKUgaMdEPKdjJ4_";
+  var SEND_TO_WHATSAPP = "AW-16974548722/P8yiCLKUgaMdEPKdjJ4_"; // Google Ads: "WhatsApp click – AIMS"
+  var SEND_TO_FORM = "AW-16974548722/nB6sCObHqKQdEPKdjJ4_";     // Google Ads: "Form Submit - AIMS"
   // Paste your Make.com (or other) webhook URL here so form leads are saved.
   // Leave empty and the form will open WhatsApp with the details instead.
   var LEAD_WEBHOOK = "https://hook.eu1.make.com/r2xwq6c4xa2bv7gpruswla6e7w3pw9v8";
@@ -500,11 +501,11 @@ footer p+p{margin-top:6px}
   document.querySelectorAll("[data-lang]").forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); }); });
 
   /* ===== Tracking ===== */
-  function convert(label){
-    try { if (window.gtag) { gtag("event","conversion",{send_to:SEND_TO}); gtag("event", label); } } catch(e){}
+  function convert(label, sendTo){
+    try { if (window.gtag) { gtag("event","conversion",{send_to:sendTo}); gtag("event", label); } } catch(e){}
   }
   function setWa(text, id){ $(id).href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(text); }
-  document.querySelectorAll(".js-wa").forEach(function(a){ a.addEventListener("click", function(){ convert("whatsapp_click"); }); });
+  document.querySelectorAll(".js-wa").forEach(function(a){ a.addEventListener("click", function(){ convert("whatsapp_click", SEND_TO_WHATSAPP); }); });
 
   /* ===== Form flow ===== */
   var choice = {town:"", type:""}, last = null;
@@ -542,7 +543,7 @@ footer p+p{margin-top:6px}
     err.hidden = true;
     var d = {name:name, mobile:mobile, town:choice.town, type:choice.type, blk:$("blk").value.trim()};
     last = d;
-    convert("generate_lead");
+    convert("generate_lead", SEND_TO_FORM);
 
     if (LEAD_WEBHOOK) {
       var body = new URLSearchParams({
