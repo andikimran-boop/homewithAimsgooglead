@@ -555,6 +555,24 @@ footer p+p{margin-top:6px}
   }
   document.querySelectorAll("[data-lang]").forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); }); });
 
+  /* ===== Lead source: Google Ads / TikTok / etc. (first visit, kept 30 days) ===== */
+  var SOURCE = (function(){
+    var q = {}; try { q = Object.fromEntries(new URLSearchParams(location.search)); } catch(e){}
+    var ref = document.referrer || "", now = "";
+    if (q.gclid || q.gbraid || q.wbraid || (q.utm_source || "").toLowerCase() === "google" && /cpc|ads|paid/i.test(q.utm_medium || "")) now = "Google Ads";
+    else if (q.utm_source) now = ({tiktok:"TikTok",instagram:"Instagram",ig:"Instagram",facebook:"Facebook",fb:"Facebook",whatsapp:"WhatsApp"}[q.utm_source.toLowerCase()] || (q.utm_source.charAt(0).toUpperCase() + q.utm_source.slice(1))) + (q.utm_campaign ? " (" + q.utm_campaign + ")" : "");
+    else if (q.ttclid || /tiktok\./i.test(ref)) now = "TikTok";
+    else if (/instagram\./i.test(ref)) now = "Instagram";
+    else if (/facebook\.|fb\./i.test(ref)) now = "Facebook";
+    else if (/google\./i.test(ref)) now = "Google search (not ads)";
+    else if (ref && ref.indexOf(location.hostname) < 0) now = "Other site: " + ref.replace(/^https?:\/\//,"").split("/")[0];
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem("aims-src") || "null"); } catch(e){}
+    if (saved && Date.now() - saved.t > 30*864e5) saved = null;
+    if (now && !saved) { saved = {s: now, t: Date.now()}; try { localStorage.setItem("aims-src", JSON.stringify(saved)); } catch(e){} }
+    return now || (saved && saved.s) || "Direct / unknown";
+  })();
+
   /* ===== Tracking ===== */
   function convert(label, sendTo){
     try { if (window.gtag) { gtag("event","conversion",{send_to:sendTo}); gtag("event", label); } } catch(e){}
@@ -652,7 +670,9 @@ footer p+p{margin-top:6px}
       var blk = x.BLK_NO, road = x.ROAD_NAME, bld = x.BUILDING;
       st.address = blk + " " + title(road) + (bld && bld !== "NIL" ? " (" + title(bld).replace(/\b(Ii|Iii|Iv)\b/g,function(m){return m.toUpperCase();}) + ")" : "");
       return hdbBlock(blk, road).then(function(h){
+        var n = digits(blk);
         if (h) setKind("HDB", h);
+        else if (n && pc.slice(-3) === ("000" + n).slice(-3)) setKind("HDB");
         else if (bld && bld !== "NIL") setKind("Condo");
         else setKind("Landed");
         foundLine();
@@ -715,7 +735,7 @@ footer p+p{margin-top:6px}
       var body = new URLSearchParams({
         submitted_at:stamp, name:d.name, mobile:mobile.slice(0,4)+" "+mobile.slice(4), wa_link:"https://wa.me/65"+mobile,
         postal_code:d.postal, address:d.address, unit_no:d.unit, property:d.property, unit_type:d.unitType, area:d.area,
-        language:lang, page:location.href
+        language:lang, page:SOURCE + " | " + location.href
       });
       try { fetch(LEAD_WEBHOOK, {method:"POST", mode:"no-cors", body:body}); } catch(x){}
     } else {
