@@ -1,0 +1,388 @@
+<title>Upgrade Affordability Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Find out what your next home could be. A 4-step check by Homes with AIMS (PropNex).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: deep-green header band with the promise, then one narrow cream column holding a 4-step form card. One gold accent. Matches sell.homeswithaims.com. */
+:root{
+  --green:#163A2E; --green-2:#1F4C3D; --ink:#1B241F; --muted:#5A6660;
+  --paper:#FAF7EF; --card:#FFFFFF; --line:#E3DED0; --gold:#B8893A; --gold-soft:#F1E6CC;
+  --on-green:#F6F1E4; --on-green-muted:#C9D3CB; --wa:#1E8E4E; --err:#B3261E; --field:#FFFFFF;
+  --display:"DM Serif Display", Georgia, "Times New Roman", serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --green:#0F2A21; --green-2:#163A2E; --ink:#ECE8DD; --muted:#A9B3AC;
+  --paper:#121915; --card:#1A231E; --line:#2C3832; --gold:#D3A757; --gold-soft:#2E281A;
+  --on-green:#F6F1E4; --on-green-muted:#B5C2B9; --wa:#27A35E; --err:#F2877C; --field:#141C18; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --green:#0F2A21; --green-2:#163A2E; --ink:#ECE8DD; --muted:#A9B3AC;
+  --paper:#121915; --card:#1A231E; --line:#2C3832; --gold:#D3A757; --gold-soft:#2E281A;
+  --on-green:#F6F1E4; --on-green-muted:#B5C2B9; --wa:#27A35E; --err:#F2877C; --field:#141C18; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.12;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--green)}
+.hero{background:var(--green);color:var(--on-green)}
+.hero .wrap{padding-block:28px 72px;display:flex;flex-direction:column;gap:14px}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--on-green-muted)}
+.brand strong{font-family:var(--display);font-weight:400;font-size:20px;color:var(--on-green)}
+.hero h1{font-size:clamp(32px,6vw,46px);margin-top:18px}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero p.lead{color:var(--on-green-muted);max-width:56ch}
+.safe-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.safe-row span{font-size:13px;border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:4px 12px;color:var(--on-green)}
+.safe-row b{color:var(--gold);font-weight:700}
+
+main .wrap{margin-top:-44px;padding-bottom:64px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px clamp(18px,4vw,36px);box-shadow:0 12px 32px rgba(22,58,46,.08);display:flex;flex-direction:column;gap:24px}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;list-style:none;margin:0;padding:0}
+.steps li{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted);min-width:0}
+.steps li::before{content:"";height:4px;border-radius:2px;background:var(--line)}
+.steps li.done::before,.steps li.on::before{background:var(--gold)}
+.steps li.on{color:var(--ink);font-weight:600}
+@media (max-width:520px){.steps li span{display:none}}
+
+.step{display:flex;flex-direction:column;gap:20px}
+.step-head{display:flex;flex-direction:column;gap:6px}
+.step-head h2{font-size:clamp(26px,4.4vw,32px)}
+.step-head p{color:var(--muted)}
+
+fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;min-width:0}
+legend{font-family:var(--display);font-size:22px;padding:0;margin-bottom:12px}
+.owner{border-top:1px solid var(--line);padding-top:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f label,.f .lab{font-weight:600;font-size:15px}
+.hint{font-size:14px;color:var(--muted)}
+input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--field);
+  border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-height:48px}
+textarea{min-height:88px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.money{position:relative}
+.money::before{content:"$";position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.money input{padding-left:28px;font-variant-numeric:tabular-nums}
+.invalid input,.invalid select,.invalid .choices{border-color:var(--err)}
+.err{font-size:14px;color:var(--err)}
+
+.choices{display:flex;flex-wrap:wrap;gap:8px;border-radius:10px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.chip span{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:15px;background:var(--field);cursor:pointer}
+.chip input:checked+span{background:var(--green);border-color:var(--green);color:var(--on-green)}
+.chip input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+
+.help{background:var(--gold-soft);border-radius:12px;padding:14px 16px;font-size:15px;display:flex;flex-direction:column;gap:4px}
+.help strong{font-weight:700}
+
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted)}
+.consent input{width:20px;height:20px;margin-top:3px;accent-color:var(--green);flex:none}
+
+.nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
+button{font:inherit;font-weight:600;border-radius:999px;padding:13px 26px;cursor:pointer;min-height:48px}
+.btn-primary{background:var(--green);color:var(--on-green);border:1px solid var(--green);margin-left:auto}
+.btn-primary:hover{background:var(--green-2)}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button[disabled]{opacity:.6;cursor:wait}
+
+.done-panel{display:flex;flex-direction:column;gap:16px;text-align:left}
+.done-panel h2{font-size:clamp(28px,5vw,36px)}
+.wa{display:inline-flex;align-items:center;gap:10px;background:var(--wa);color:#fff;text-decoration:none;font-weight:600;border-radius:999px;padding:13px 24px;align-self:flex-start}
+.status{font-size:14px;color:var(--muted)}
+
+footer .wrap{padding-block:0 40px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+@media (prefers-reduced-motion:no-preference){.step{animation:in .25s ease-out}@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}}
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><strong>Homes with AIMS</strong><span>PropNex</span></div>
+    <p class="eyebrow">Upgrade affordability check</p>
+    <h1>See what your next home <em>can safely be</em></h1>
+    <p class="lead">Four short steps. We use your numbers to work out your breakeven price, your maximum loan, and whether your upgrade passes our SAFE checks. Fill it in once for your household.</p>
+    <div class="safe-row" aria-label="SAFE checks">
+      <span><b>S</b> Sale pays for it</span><span><b>A</b> Aside first</span><span><b>F</b> Four years covered</span><span><b>E</b> Even if rates rise</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <form class="card" id="form" novalidate>
+      <ol class="steps" id="steps" aria-label="Progress">
+        <li class="on"><span>About you</span></li>
+        <li><span>Income and CPF</span></li>
+        <li><span>Your flat</span></li>
+        <li><span>Next home</span></li>
+      </ol>
+
+      <!-- Step 1 -->
+      <section class="step" data-step="1">
+        <div class="step-head">
+          <h2>About you</h2>
+          <p>Are you buying on your own or with your spouse?</p>
+        </div>
+        <div class="f" data-req="buying_with">
+          <div class="choices" role="radiogroup" aria-label="Buying with">
+            <label class="chip"><input type="radio" name="buying_with" id="bw_joint" value="With spouse" checked><span>With my spouse</span></label>
+            <label class="chip"><input type="radio" name="buying_with" id="bw_single" value="On my own"><span>On my own</span></label>
+          </div>
+        </div>
+        <fieldset class="owner">
+          <legend>Owner 1</legend>
+          <div class="grid">
+            <div class="f"><label for="o1_name">Full name</label><input type="text" id="o1_name" name="o1_name" autocomplete="name" required></div>
+            <div class="f"><label for="o1_dob">Date of birth</label><input type="date" id="o1_dob" name="o1_dob" required></div>
+            <div class="f"><label for="o1_mobile">Mobile</label><input type="tel" id="o1_mobile" name="o1_mobile" inputmode="tel" autocomplete="tel" placeholder="8 digits" required></div>
+            <div class="f"><label for="o1_email">Email</label><input type="email" id="o1_email" name="o1_email" autocomplete="email" required></div>
+          </div>
+        </fieldset>
+        <fieldset class="owner" id="owner2">
+          <legend>Owner 2</legend>
+          <div class="grid">
+            <div class="f"><label for="o2_name">Full name</label><input type="text" id="o2_name" name="o2_name" data-joint required></div>
+            <div class="f"><label for="o2_dob">Date of birth</label><input type="date" id="o2_dob" name="o2_dob" data-joint required></div>
+            <div class="f"><label for="o2_mobile">Mobile</label><input type="tel" id="o2_mobile" name="o2_mobile" inputmode="tel" placeholder="8 digits" data-joint required></div>
+            <div class="f"><label for="o2_email">Email <span class="hint">(optional)</span></label><input type="email" id="o2_email" name="o2_email"></div>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- Step 2 -->
+      <section class="step" data-step="2" hidden>
+        <div class="step-head">
+          <h2>Income and CPF</h2>
+          <p>Gross monthly salary before CPF. CPF figures can be approximate for now.</p>
+        </div>
+        <div class="help">
+          <strong>Where to find your CPF figures</strong>
+          <span>Log in to the CPF website or app with Singpass. Under Home ownership, open the property and look for the principal amount withdrawn and the accrued interest.</span>
+        </div>
+        <fieldset class="owner">
+          <legend id="o1_legend">Owner 1</legend>
+          <div class="grid">
+            <div class="f"><label for="o1_income">Gross monthly salary</label><div class="money"><input type="text" inputmode="numeric" id="o1_income" name="o1_income" data-money required></div></div>
+            <div class="f"><label for="o1_cpf_oa">CPF OA balance today</label><div class="money"><input type="text" inputmode="numeric" id="o1_cpf_oa" name="o1_cpf_oa" data-money required></div></div>
+            <div class="f"><label for="o1_cpf_principal">CPF principal used for this flat</label><div class="money"><input type="text" inputmode="numeric" id="o1_cpf_principal" name="o1_cpf_principal" data-money required></div></div>
+            <div class="f"><label for="o1_cpf_interest">CPF accrued interest</label><div class="money"><input type="text" inputmode="numeric" id="o1_cpf_interest" name="o1_cpf_interest" data-money required></div></div>
+          </div>
+        </fieldset>
+        <fieldset class="owner" id="owner2b">
+          <legend id="o2_legend">Owner 2</legend>
+          <div class="grid">
+            <div class="f"><label for="o2_income">Gross monthly salary</label><div class="money"><input type="text" inputmode="numeric" id="o2_income" name="o2_income" data-money data-joint required></div></div>
+            <div class="f"><label for="o2_cpf_oa">CPF OA balance today</label><div class="money"><input type="text" inputmode="numeric" id="o2_cpf_oa" name="o2_cpf_oa" data-money data-joint required></div></div>
+            <div class="f"><label for="o2_cpf_principal">CPF principal used for this flat</label><div class="money"><input type="text" inputmode="numeric" id="o2_cpf_principal" name="o2_cpf_principal" data-money data-joint required></div></div>
+            <div class="f"><label for="o2_cpf_interest">CPF accrued interest</label><div class="money"><input type="text" inputmode="numeric" id="o2_cpf_interest" name="o2_cpf_interest" data-money data-joint required></div></div>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- Step 3 -->
+      <section class="step" data-step="3" hidden>
+        <div class="step-head">
+          <h2>Your flat and household</h2>
+          <p>Enter the home loan once for the household, even if you both pay it.</p>
+        </div>
+        <div class="grid">
+          <div class="f"><label for="postal">Postal code</label><input type="text" id="postal" name="postal" inputmode="numeric" maxlength="6" placeholder="6 digits" required></div>
+          <div class="f"><label for="unit">Unit number</label><input type="text" id="unit" name="unit" placeholder="#10-306" required></div>
+          <div class="f"><label for="flat_type">Flat type</label>
+            <select id="flat_type" name="flat_type" required>
+              <option value="">Choose one</option><option>2-room</option><option>3-room</option><option>4-room</option><option>5-room</option><option>Executive</option><option>Private property</option>
+            </select></div>
+          <div class="f"><label for="outstanding_loan">Outstanding home loan</label><div class="money"><input type="text" inputmode="numeric" id="outstanding_loan" name="outstanding_loan" data-money required></div></div>
+          <div class="f"><label for="loan_type">Current loan from</label>
+            <select id="loan_type" name="loan_type" required>
+              <option value="">Choose one</option><option>HDB</option><option>Bank</option><option>No loan</option>
+            </select></div>
+          <div class="f"><label for="hdb_loans_used">HDB loans taken before</label>
+            <select id="hdb_loans_used" name="hdb_loans_used" required>
+              <option value="">Choose one</option><option>0</option><option>1</option><option>2</option><option>Not sure</option>
+            </select></div>
+          <div class="f"><label for="other_debts">Other monthly loan repayments</label><div class="money"><input type="text" inputmode="numeric" id="other_debts" name="other_debts" data-money placeholder="Car, renovation, credit cards"></div></div>
+          <div class="f"><label for="expenses">Monthly household expenses</label><div class="money"><input type="text" inputmode="numeric" id="expenses" name="expenses" data-money required></div><span class="hint">Food, bills, transport, children. Excluding the home loan.</span></div>
+          <div class="f"><label for="cash_savings">Cash savings for the move</label><div class="money"><input type="text" inputmode="numeric" id="cash_savings" name="cash_savings" data-money placeholder="0 if none"></div></div>
+        </div>
+      </section>
+
+      <!-- Step 4 -->
+      <section class="step" data-step="4" hidden>
+        <div class="step-head">
+          <h2>Your next home</h2>
+          <p>Pick everything you are open to. We will show you the numbers for each.</p>
+        </div>
+        <div class="f" data-req="looking_for">
+          <span class="lab" id="lf_lab">I am looking at</span>
+          <div class="choices" role="group" aria-labelledby="lf_lab">
+            <label class="chip"><input type="checkbox" name="looking_for" id="lf_hdb" value="HDB resale"><span>HDB resale</span></label>
+            <label class="chip"><input type="checkbox" name="looking_for" id="lf_ec" value="EC"><span>Executive condo</span></label>
+            <label class="chip"><input type="checkbox" name="looking_for" id="lf_nl" value="New launch condo"><span>New launch condo</span></label>
+            <label class="chip"><input type="checkbox" name="looking_for" id="lf_rc" value="Resale condo"><span>Resale condo</span></label>
+            <label class="chip"><input type="checkbox" name="looking_for" id="lf_ns" value="Not sure"><span>Not sure yet</span></label>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="f"><label for="timeframe">When would you like to move?</label>
+            <select id="timeframe" name="timeframe" required>
+              <option value="">Choose one</option><option>Within 6 months</option><option>6 to 12 months</option><option>1 to 2 years</option><option>Just exploring</option>
+            </select></div>
+          <div class="f"><label for="language">Preferred language</label>
+            <select id="language" name="language">
+              <option>English</option><option>Bahasa Melayu</option>
+            </select></div>
+        </div>
+        <div class="f"><label for="reason">What is making you think of moving? <span class="hint">(optional)</span></label><textarea id="reason" name="reason" placeholder="More space for the kids, closer to parents, cash for retirement…"></textarea></div>
+        <label class="consent" for="consent"><input type="checkbox" id="consent" name="consent" value="Yes" required><span>I consent to Homes with AIMS (PropNex) using this information to prepare my consultation. It is kept confidential and not shared or sold.</span></label>
+        <p class="err" id="consent_err" hidden>Please tick the consent box so we can prepare your numbers.</p>
+      </section>
+
+      <!-- Done -->
+      <section class="step done-panel" data-step="done" hidden>
+        <p class="eyebrow">Received</p>
+        <h2 id="done_title">Thank you, we have your numbers</h2>
+        <p>Andik or Mirta will contact you within 24 hours with your breakeven price, your loan limits and your SAFE check, and a time to go through them together.</p>
+      </section>
+
+      <div class="nav" id="nav">
+        <button type="button" class="btn-ghost" id="back" hidden>Back</button>
+        <button type="submit" class="btn-primary" id="next">Next</button>
+      </div>
+      <p class="err" id="send_err" hidden></p>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Homes with AIMS · Andik Imran (R061801F) and Mirta Syazanna (R070524E) · PropNex Realty Pte Ltd (L3008022J)</span>
+    <span>Figures are estimates for planning. Final loan amounts depend on bank and HDB approval.</span>
+  </div>
+</footer>
+
+<script>
+// Paste your Google Apps Script web app URL here. Leave empty to run the page in preview mode.
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTVWR8DWLxb7dXfDcjMSG64lP-NGzDH34lI1y8xt4h1C0UHzoOpZQjWHGMxD6qTtpc/exec";
+
+(function(){
+  const form = document.getElementById('form');
+  const steps = [...document.querySelectorAll('.step')];
+  const dots = [...document.querySelectorAll('#steps li')];
+  const back = document.getElementById('back');
+  const next = document.getElementById('next');
+  const sendErr = document.getElementById('send_err');
+  let cur = 1;
+
+  const joint = () => form.querySelector('input[name=buying_with]:checked').value === 'With spouse';
+
+  function syncJoint(){
+    const j = joint();
+    ['owner2','owner2b'].forEach(id => document.getElementById(id).hidden = !j);
+    form.querySelectorAll('[data-joint]').forEach(el => el.required = j);
+    document.getElementById('o1_legend').textContent = j ? 'Owner 1' : 'You';
+  }
+  form.querySelectorAll('input[name=buying_with]').forEach(r => r.addEventListener('change', syncJoint));
+
+  // Money fields: digits only, show thousands separators
+  form.querySelectorAll('[data-money]').forEach(el => {
+    el.addEventListener('input', () => {
+      const d = el.value.replace(/[^\d]/g,'');
+      el.value = d ? Number(d).toLocaleString('en-SG') : '';
+    });
+  });
+
+  function show(n){
+    cur = n;
+    steps.forEach(s => s.hidden = String(s.dataset.step) !== String(n));
+    dots.forEach((d,i) => { d.classList.toggle('on', i+1 === n); d.classList.toggle('done', typeof n === 'number' ? i+1 < n : true); });
+    back.hidden = !(typeof n === 'number' && n > 1);
+    next.textContent = n === 4 ? 'Send my details' : 'Next';
+    document.getElementById('nav').hidden = n === 'done';
+    form.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+  }
+
+  function clearErr(f){ f.classList.remove('invalid'); const e = f.querySelector('.err'); if (e) e.remove(); }
+  function setErr(f, msg){ f.classList.add('invalid'); if (!f.querySelector('.err')){ const p = document.createElement('p'); p.className='err'; p.textContent = msg; f.appendChild(p);} }
+
+  function validate(n){
+    const sec = steps.find(s => s.dataset.step === String(n));
+    let ok = true, first = null;
+    sec.querySelectorAll('.f').forEach(f => {
+      clearErr(f);
+      const el = f.querySelector('input:not([type=radio]):not([type=checkbox]),select,textarea');
+      if (!el || el.closest('[hidden]')) return;
+      let msg = '';
+      if (el.required && !el.value.trim()) msg = 'Please fill this in.';
+      else if (el.type === 'email' && el.value && !/^\S+@\S+\.\S+$/.test(el.value)) msg = 'Check the email address.';
+      else if (el.type === 'tel' && el.value && el.value.replace(/\D/g,'').length < 8) msg = 'Enter an 8-digit mobile number.';
+      else if (el.id === 'postal' && el.value && !/^\d{6}$/.test(el.value)) msg = 'Postal codes have 6 digits.';
+      if (msg){ ok = false; setErr(f, msg); first = first || el; }
+    });
+    if (n === 4){
+      const lf = sec.querySelector('[data-req=looking_for]');
+      clearErr(lf);
+      if (!sec.querySelector('input[name=looking_for]:checked')){ ok = false; setErr(lf, 'Pick at least one.'); first = first || lf.querySelector('input'); }
+      const c = document.getElementById('consent');
+      document.getElementById('consent_err').hidden = c.checked;
+      if (!c.checked){ ok = false; first = first || c; }
+    }
+    if (first) first.focus();
+    return ok;
+  }
+
+  function payload(){
+    const fd = new FormData(form);
+    const out = new URLSearchParams();
+    const seen = new Set();
+    for (const [k] of fd){ if (seen.has(k)) continue; seen.add(k);
+      let v = fd.getAll(k).join(', ');
+      const el = form.elements[k];
+      if (el && el.dataset && el.dataset.money !== undefined) v = v.replace(/,/g,'');
+      out.append(k, v);
+    }
+    if (!joint()) ['o2_name','o2_dob','o2_mobile','o2_email','o2_income','o2_cpf_oa','o2_cpf_principal','o2_cpf_interest'].forEach(k => out.set(k,''));
+    out.append('submitted_from', location.hostname || 'preview');
+    return out;
+  }
+
+  async function send(){
+    next.disabled = true; next.textContent = 'Sending…'; sendErr.hidden = true;
+    const body = payload();
+    try {
+      if (SCRIPT_URL){
+        await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body });
+      } else {
+        await new Promise(r => setTimeout(r, 500)); // preview mode
+      }
+      const name = (body.get('o1_name') || '').split(' ')[0];
+      if (name) document.getElementById('done_title').textContent = 'Thank you, ' + name + '. We have your numbers.';
+      show('done');
+    } catch (e){
+      sendErr.textContent = 'Your details did not send. Check your internet connection and press Send again.';
+      sendErr.hidden = false;
+      next.textContent = 'Send my details';
+    } finally { next.disabled = false; }
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!validate(cur)) return;
+    if (cur < 4) show(cur + 1); else send();
+  });
+  back.addEventListener('click', () => show(cur - 1));
+
+  syncJoint();
+})();
+</script>
