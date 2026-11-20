@@ -297,7 +297,7 @@ footer p+p{margin-top:6px}
               <label class="qt" for="postal" data-ms="Apakah poskod rumah anda?">What's your postal code?</label>
               <div class="row-in">
                 <input class="big" id="postal" name="postal" inputmode="numeric" autocomplete="postal-code" maxlength="6" placeholder="e.g. 510633" data-ms-ph="cth. 510633">
-                <button class="btn go" type="button" id="findBtn" data-ms="Cari">Find</button>
+                <button class="btn go" type="button" id="findBtn" data-ms="Seterusnya">Next</button>
               </div>
               <p class="found" id="found" hidden></p>
             </div>
@@ -625,22 +625,6 @@ footer p+p{margin-top:6px}
   }
   function withTimeout(promise, ms){ return Promise.race([promise, new Promise(function(_, rej){ setTimeout(function(){ rej(new Error("timeout")); }, ms); })]); }
 
-  // 1) OneMap: postal code -> block, road, building
-  function oneMap(pc){
-    return withTimeout(fetch("https://www.onemap.gov.sg/api/common/elastic/search?searchVal="+pc+"&returnGeom=N&getAddrDetails=Y&pageNum=1").then(function(r){ return r.json(); }), 5000)
-      .then(function(j){ var x = (j.results || []).filter(function(r){ return r.POSTAL === pc; })[0] || (j.results || [])[0]; return x || null; });
-  }
-  // 2) HDB block register (data.gov.sg): is this block an HDB residential block? Which flat types does it have?
-  function hdbBlock(blk, road){
-    var f = encodeURIComponent(JSON.stringify({blk_no: blk}));
-    return withTimeout(fetch("https://data.gov.sg/api/action/datastore_search?resource_id=d_17f5382f26140b1fdae0ba2ef6239d2f&filters="+f+"&limit=100").then(function(r){ return r.json(); }), 5000)
-      .then(function(j){
-        var first = (road || "").split(" ")[0];
-        var hit = ((j.result && j.result.records) || []).filter(function(r){ return r.residential === "Y" && r.street.split(" ")[0] === first; })[0];
-        return hit || null;
-      });
-  }
-
   function setKind(kind, counts){
     st.property = kind; st.hdbCounts = counts || null; st.unitType = "";
     var L = T[lang], keys, map, q;
@@ -687,29 +671,9 @@ footer p+p{margin-top:6px}
     if (pc === st.postal && st.property) return;
     st.postal = pc; st.area = areaFromPostal(pc); st.address = ""; st.property = "";
     hideFrom(["st-kind","st-type","st-unit","st-name","st-mobile"]);
-    $("found").textContent = T[lang].checking; $("found").hidden = false;
-    oneMap(pc).then(function(x){
-      if (!x) throw new Error("none");
-      var blk = x.BLK_NO, road = x.ROAD_NAME, bld = x.BUILDING;
-      st.address = blk + " " + title(road) + (bld && bld !== "NIL" ? " (" + title(bld).replace(/\b(Ii|Iii|Iv)\b/g,function(m){return m.toUpperCase();}) + ")" : "");
-      return hdbBlock(blk, road).then(function(h){
-        var n = digits(blk);
-        if (h) setKind("HDB", h);
-        else if (n && pc.slice(-3) === ("000" + n).slice(-3)) setKind("HDB");
-        else if (bld && bld !== "NIL") setKind("Condo");
-        else setKind("Landed");
-        foundLine();
-      }, function(){
-        // HDB register unreachable: guess from postal code (HDB postal codes end in the block number)
-        var n = digits(blk);
-        if (n && pc.slice(-3) === ("000" + n).slice(-3)) setKind("HDB"); else if (bld && bld !== "NIL") setKind("Condo"); else setKind("Landed");
-        foundLine();
-      });
-    }).catch(function(){
-      st.address = "";
-      $("found").textContent = T[lang].notFound; $("found").hidden = false;
-      show("st-kind");
-    });
+    // Address is looked up after the lead submits (OneMap now needs a server-side token).
+    $("found").hidden = true;
+    show("st-kind");
   }
   $("findBtn").addEventListener("click", lookup);
   $("postal").addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); lookup(); } });
