@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Punggol, Sengkang, Tampines &amp; Pasir Ris Flat Prices — Homes with AIMS (PropNex)</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -50,7 +51,7 @@ fbq('track', 'PageView');
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%;display:block}
 h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.005em}
 p{margin:0}
@@ -66,6 +67,11 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .logo{display:flex;align-items:baseline;gap:8px;text-decoration:none}
 .logo b{font-family:var(--serif);font-weight:400;font-size:22px;letter-spacing:.02em}
 .logo span{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hright{display:flex;align-items:center;gap:12px}
+.hnum{font-weight:700;font-size:15px;color:var(--forest);white-space:nowrap;letter-spacing:.01em}
+.logo b{white-space:nowrap}
+@media (max-width:480px){.hright{gap:8px}.hnum{font-size:14px}.logo span{display:none}.lang button{padding:6px 9px;min-width:38px}}
+@media (max-width:360px){.logo b{font-size:18px}.hnum{font-size:13px}.lang button{padding:6px 7px;min-width:34px}}
 .lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--paper)}
 .lang button{border:0;background:none;border-radius:999px;padding:6px 12px;min-width:44px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
 .lang button[aria-pressed="true"]{background:var(--forest);color:var(--on-dark)}
@@ -172,10 +178,6 @@ section{padding-block:56px}
 .prices{background:var(--forest);color:var(--on-dark)}
 .prices .eyebrow{color:var(--gold)}
 .prices .sec-head p{color:var(--on-dark-muted)}
-.towns{display:inline-grid;grid-template-columns:repeat(4,auto);gap:6px;padding:5px;margin-bottom:18px;border:1px solid rgba(246,241,230,.2);border-radius:999px;max-width:100%}
-.towns button{min-height:44px;padding:0 20px;border:0;border-radius:999px;background:transparent;color:var(--on-dark-muted);font-weight:600;font-size:15.5px;cursor:pointer;white-space:nowrap}
-.towns button:hover{color:var(--on-dark)}
-.towns button[aria-pressed="true"]{background:var(--on-dark);color:var(--forest)}
 .blocks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .blk{border:1px solid rgba(246,241,230,.16);border-radius:16px;padding:18px 18px 16px;background:rgba(255,255,255,.035);display:grid;gap:12px;min-width:0}
 .blk-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
@@ -247,9 +249,6 @@ footer p+p{margin-top:6px}
 }
 @media (max-width:600px){
   .blocks{grid-template-columns:1fr}
-  .towns{display:grid;grid-template-columns:repeat(4,1fr);border-radius:16px}
-  .towns{gap:2px;padding:4px}
-  .towns button{padding:0 2px;font-size:clamp(13px,3.7vw,14.5px);border-radius:12px;min-width:0}
   .paths li{grid-template-columns:1fr;gap:2px}
   .card{padding:20px 18px;border-radius:18px}
   .card-photo{margin:-20px -18px 16px;border-radius:18px 18px 0 0;aspect-ratio:2/1}
@@ -257,12 +256,8 @@ footer p+p{margin-top:6px}
   .trust{margin-top:14px}
 }
 /* Sticky WhatsApp bar */
-.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(251,248,242,.97);border-top:1px solid var(--line);padding:10px max(18px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}
-.dock .btn{margin:0;min-height:52px}
 @media (min-width:900px){
   body{padding-bottom:0}
-  .dock{left:auto;right:max(24px,env(safe-area-inset-right,0px));bottom:calc(24px + env(safe-area-inset-bottom,0px));border:0;background:none;padding:0}
-  .dock .btn{width:auto;padding:0 22px;box-shadow:0 12px 30px -12px rgba(21,36,31,.5)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
 </style>
@@ -272,9 +267,12 @@ footer p+p{margin-top:6px}
 <header>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Homes with AIMS"><b>Homes with AIMS</b><span>PropNex</span></a>
-    <div class="lang" role="group" aria-label="Language / Bahasa">
-      <button type="button" data-lang="en" aria-pressed="true">EN</button>
-      <button type="button" data-lang="ms" aria-pressed="false">BM</button>
+    <div class="hright">
+      <span class="hnum" aria-label="Andik: 8736 8736">8736 8736</span>
+      <div class="lang" role="group" aria-label="Language / Bahasa">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="ms" aria-pressed="false">BM</button>
+      </div>
     </div>
   </div>
 </header>
@@ -285,7 +283,7 @@ footer p+p{margin-top:6px}
       <div>
         <p class="eyebrow" data-ms="Assalamualaikum, kami Andik &amp; Mirta">Hi, we're Andik &amp; Mirta</p>
         <h1 data-ms="Nak jual flat? Jom tengok <em>angka sebenar</em> dulu.">Thinking of selling? Let's look at the <em>real numbers</em> first.</h1>
-        <p class="lede" data-ms="Tahun ini, dua flat jenis yang sama di blok yang sama dijual dengan beza <b>$140,000</b> di Punggol dan <b>$177,000</b> di Tampines. Flat anda di hujung yang mana? Jawab beberapa soalan ringkas, dan kami akan WhatsApp anda jualan terkini di blok anda.">This year, two flats of the same type in the same block sold <b>$140,000 apart</b> in Punggol and <b>$177,000 apart</b> in Tampines. Which end is yours? Answer a few quick questions and we'll WhatsApp you the latest sales in your own block.</p>
+        <p class="lede" data-ms="Tahun ini, dua flat jenis yang sama di blok yang sama dijual dengan beza <b>$177,000</b> di Tampines dan <b>$140,000</b> di Punggol. Flat anda di hujung yang mana? Jawab beberapa soalan ringkas, dan kami akan WhatsApp anda jualan terkini di blok anda.">This year, two flats of the same type in the same block sold <b>$177,000 apart</b> in Tampines and <b>$140,000 apart</b> in Punggol. Which end is yours? Answer a few quick questions and we'll WhatsApp you the latest sales in your own block.</p>
         <p class="tagline">Your home, in the right hands.<i>Aimed at what's best for your family.</i></p>
         <div class="trust">
           <p><b>Andik &amp; Mirta</b> · <span data-ms="CEA R061801F · R070524E">CEA R061801F · R070524E</span><br><span class="stars" aria-hidden="true">★★★★★</span> <span data-ms="65+ ulasan Google">65+ Google reviews</span></p>
@@ -375,16 +373,10 @@ footer p+p{margin-top:6px}
       <div class="sec-head">
         <p class="eyebrow" data-ms="Harga sebenar · 12 bulan lepas">Real prices · last 12 months</p>
         <h2 data-ms="Apa yang jiran anda dapat tahun ini">What your neighbours sold for this year</h2>
-        <p data-ms="Ini blok yang lebih baru di Punggol, Sengkang, Tampines dan Pasir Ris (pajakan 2015 hingga 2021). Dua flat di blok yang sama boleh berbeza puluhan ribu, ikut tingkat, arah dan keadaan. Sebab itu kami semak flat anda sendiri, bukan purata.">These are newer blocks in Punggol, Sengkang, Tampines and Pasir Ris (leases from 2015 to 2021). Two flats in the same block can differ by tens of thousands, depending on floor, facing and condition. That's why we look at your flat, not an average.</p>
-      </div>
-      <div class="towns" id="towns" role="group" aria-label="Town / Bandar">
-        <button type="button" data-town="Punggol" aria-pressed="true">Punggol</button>
-        <button type="button" data-town="Sengkang" aria-pressed="false">Sengkang</button>
-        <button type="button" data-town="Tampines" aria-pressed="false">Tampines</button>
-        <button type="button" data-town="Pasir Ris" aria-pressed="false">Pasir Ris</button>
+        <p data-ms="Ini blok yang lebih baru (pajakan dari 2010) di kawasan Timur dan Timur Laut. Dua flat di blok yang sama boleh berbeza puluhan ribu, ikut tingkat, arah dan keadaan. Sebab itu kami semak flat anda sendiri, bukan purata.">These are newer blocks (leases from 2010) in the East and North-East. Two flats in the same block can differ by tens of thousands, depending on floor, facing and condition. That's why we look at your flat, not an average.</p>
       </div>
       <div class="blocks" id="blocks"></div>
-      <p class="source" data-ms="Sumber: data harga jualan semula flat HDB di data.gov.sg. Punggol dan Sengkang: permohonan berdaftar Nov 2025 hingga Okt 2026. Tampines dan Pasir Ris: Dis 2025 hingga Nov 2026. Bilangan dalam kurungan ialah jumlah jualan. Ini harga lepas, bukan penilaian.">Source: HDB resale flat prices on data.gov.sg. Punggol and Sengkang: registered Nov 2025 to Oct 2026. Tampines and Pasir Ris: Dec 2025 to Nov 2026. Numbers in brackets are how many sold. These are past prices, not a valuation.</p>
+      <p class="source" data-ms="Sumber: data harga jualan semula flat HDB di data.gov.sg. Blok Timur: permohonan berdaftar Dis 2025 hingga Nov 2026. Blok Timur Laut: Nov 2025 hingga Okt 2026. Bilangan dalam kurungan ialah jumlah jualan. Ini harga lepas, bukan penilaian.">Source: HDB resale flat prices on data.gov.sg. East blocks: registered Dec 2025 to Nov 2026. North-East blocks: Nov 2025 to Oct 2026. Numbers in brackets are how many sold. These are past prices, not a valuation.</p>
       <a class="btn" href="#check" data-ms="Semak harga flat saya">Check my flat's price</a>
     </div>
   </section>
@@ -414,7 +406,7 @@ footer p+p{margin-top:6px}
     <div class="wrap">
       <div class="sec-head">
         <p class="eyebrow" data-ms="Baru dijual oleh kami">Recently sold by us</p>
-        <h2 data-ms="Rumah yang kami jual di Punggol, Sengkang, Tampines &amp; Pasir Ris">Homes we've sold in Punggol, Sengkang, Tampines &amp; Pasir Ris</h2>
+        <h2 data-ms="Rumah yang kami jual di Timur dan Timur Laut">Homes we've sold in the East and North-East</h2>
       </div>
       <div class="sold" id="soldList"></div>
 
@@ -494,13 +486,6 @@ footer p+p{margin-top:6px}
 </footer>
 
 
-<div class="dock">
-  <a class="btn wa js-wa" id="dockWa" href="https://wa.me/6587368736" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.7-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.2-.2-.5-.3Z"/></svg>
-    <span data-ms="WhatsApp Andik &amp; Mirta">WhatsApp Andik &amp; Mirta</span>
-  </a>
-</div>
-
 <script>
 (function(){
   /* ===== SETTINGS ===== */
@@ -512,22 +497,16 @@ footer p+p{margin-top:6px}
   var LEAD_WEBHOOK = "https://hook.eu1.make.com/r2xwq6c4xa2bv7gpruswla6e7w3pw9v8";
 
   /* ===== DATA: HDB resale (data.gov.sg). [type, min, max, sales] in S$ thousands. =====
-     Punggol + Sengkang: registered Nov 2025 – Oct 2026. Tampines + Pasir Ris: registered Dec 2025 – Nov 2026.
+     East (Tampines, Pasir Ris): registered Dec 2025 – Nov 2026. North-East (Punggol, Sengkang): Nov 2025 – Oct 2026.
+     Order is East, North-East, East, North-East.
      This file is served at / and at /east/ (identical copies). After editing, run: cp index.html east/index.html */
-  var EAST = /^\/east(\/|$)/.test(location.pathname);
   var BLOCKS = [
-    {town:"Punggol", blk:"422A Northshore Dr", lease:2021, rows:[["4 ROOM",708,848,7],["5 ROOM",880,1100,14]]},
-    {town:"Punggol", blk:"310B Punggol Walk", lease:2016, rows:[["4 ROOM",635,702,11],["5 ROOM",820,860,3]]},
-    {town:"Punggol", blk:"323A Sumang Walk", lease:2020, rows:[["4 ROOM",611,735,4],["5 ROOM",750,835,4]]},
-    {town:"Sengkang", blk:"338A Anchorvale Cres", lease:2018, rows:[["4 ROOM",686,739,6],["5 ROOM",815,835,3]]},
-    {town:"Sengkang", blk:"415B Fernvale Link", lease:2016, rows:[["4 ROOM",608,695,7],["5 ROOM",796,835,2]]},
-    {town:"Sengkang", blk:"289A Compassvale Cres", lease:2017, rows:[["3 ROOM",540,550,2],["4 ROOM",608,694,6]]},
-    {town:"Tampines", blk:"619A Tampines St 61", lease:2021, rows:[["4 ROOM",732,840,14],["5 ROOM",865,965,12]]},
     {town:"Tampines", blk:"876C Tampines Ave 8", lease:2021, rows:[["4 ROOM",696,794,10],["5 ROOM",818,995,16]]},
-    {town:"Tampines", blk:"613A Tampines North Dr 1", lease:2020, rows:[["3 ROOM",570,628,6],["4 ROOM",680,818,8]]},
+    {town:"Punggol", blk:"422A Northshore Dr", lease:2021, rows:[["4 ROOM",708,848,7],["5 ROOM",880,1100,14]]},
     {town:"Pasir Ris", blk:"530C Pasir Ris Dr 1", lease:2015, rows:[["4 ROOM",758,855,5],["5 ROOM",945,945,2]]},
-    {town:"Pasir Ris", blk:"525C Pasir Ris St 51", lease:2015, rows:[["4 ROOM",700,800,5],["5 ROOM",919,919,1]]},
-    {town:"Pasir Ris", blk:"530A Pasir Ris Dr 1", lease:2015, rows:[["3 ROOM",608,608,1],["4 ROOM",770,830,6]]}
+    {town:"Sengkang", blk:"338A Anchorvale Cres", lease:2018, rows:[["4 ROOM",686,739,6],["5 ROOM",815,835,3]]},
+    {town:"Tampines", blk:"619A Tampines St 61", lease:2021, rows:[["4 ROOM",732,840,14],["5 ROOM",865,965,12]]},
+    {town:"Punggol", blk:"310B Punggol Walk", lease:2016, rows:[["4 ROOM",635,702,11],["5 ROOM",820,860,3]]}
   ];
   var SOLD_NE = [
     {img:"/img/sold-1.webp", area:"Punggol · Sumang", blk:"Blk 325B Sumang Walk", type:"4 ROOM", sqm:93},
@@ -545,8 +524,7 @@ footer p+p{margin-top:6px}
     {img:"/east/img/sold-5.webp", area:"Tampines", blk:"Blk 343 Tampines St 33", kind:"HDB"},
     {img:"/east/img/sold-6.webp", area:"Tampines", blk:"Treasure at Tampines", kind:"Condo"}
   ];
-  var SOLD = EAST ? SOLD_EAST.concat(SOLD_NE) : SOLD_NE.concat(SOLD_EAST);
-  var town = EAST ? "Tampines" : "Punggol";
+  var SOLD = []; SOLD_EAST.forEach(function(x, i){ SOLD.push(x); if (SOLD_NE[i]) SOLD.push(SOLD_NE[i]); });
 
   /* ===== TEXT ===== */
   var T = {
@@ -582,7 +560,7 @@ footer p+p{margin-top:6px}
   /* ===== Render blocks + sold ===== */
   function renderBlocks(){
     var L = T[lang];
-    $("blocks").innerHTML = BLOCKS.filter(function(b){ return b.town === town; }).map(function(b){
+    $("blocks").innerHTML = BLOCKS.map(function(b){
       return '<article class="blk"><div class="blk-top"><div><p class="blk-town">'+b.town+'</p><h3>'+b.blk+'</h3></div><span class="lease num">'+L.lease+b.lease+'</span></div><div class="rows">'+
         b.rows.map(function(r){ return '<div class="row num"><span>'+L.type[r[0]]+'</span><b>'+fmt(r[1])+(r[1]!==r[2]?' – '+fmt(r[2]):'')+'</b><small>('+L.sales(r[3])+')</small></div>'; }).join("")+
         '</div></article>';
@@ -592,15 +570,6 @@ footer p+p{margin-top:6px}
       return '<article><div class="ph">'+(n?'<span class="bn">'+n+'</span>':'')+'<img src="'+s.img+'" alt="'+s.blk+'" loading="lazy" onerror="this.remove()"><span class="tag">'+L.sold+'</span></div><div class="meta"><small>'+s.area+'</small><b>'+s.blk+'</b><span>'+(s.kind || ('HDB '+L.type[s.type]+' · '+s.sqm+' sqm'))+'</span></div></article>';
     }).join("");
   }
-
-  /* ===== Town picker for the price blocks ===== */
-  function setTown(t){
-    town = t;
-    document.querySelectorAll("[data-town]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-town") === t)); });
-    renderBlocks();
-  }
-  document.querySelectorAll("[data-town]").forEach(function(b){ b.addEventListener("click", function(){ setTown(b.getAttribute("data-town")); }); });
-  setTown(town);
 
   /* ===== Language ===== */
   var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-ms]"));
@@ -615,7 +584,6 @@ footer p+p{margin-top:6px}
     document.querySelectorAll("[data-lang]").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === l)); });
     renderBlocks();
     refreshLang();
-    $("dockWa").href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(T[l].waHi);
     if (!$("thanks").hidden && last) $("tyTitle").textContent = T[l].ty(last.name);
     try { localStorage.setItem("aims-lang", l); } catch(e){}
   }
