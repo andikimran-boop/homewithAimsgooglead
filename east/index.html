@@ -191,6 +191,8 @@ section{padding-block:56px}
 .sec-head{display:grid;gap:10px;max-width:42em;margin-bottom:26px}
 .sec-head h2{font-size:clamp(34px,5vw,48px)}
 .sec-head p{color:var(--muted)}
+.sec-head.sub{margin:56px 0 0}
+.sec-head.sub + .reviews,.sec-head.sub + .vids{margin-top:22px}
 .prices{background:var(--forest);color:var(--on-dark)}
 .prices .eyebrow{color:var(--gold)}
 .prices .sec-head p{color:var(--on-dark-muted)}
@@ -283,7 +285,7 @@ footer p+p{margin-top:6px}
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Homes with AIMS"><b>Homes with AIMS</b><span>PropNex</span></a>
     <div class="hright">
-      <p class="hcta"><span data-ms="Ada soalan?">Questions?</span> <b class="num">8736 8736</b></p>
+      <p class="hcta"><span data-ms="Ada soalan?">Questions?</span> <b class="num"><span aria-hidden="true">📞</span> 8736 8736</b></p>
       <div class="lang" role="group" aria-label="Language / Bahasa">
         <button type="button" data-lang="en" aria-pressed="true">EN</button>
         <button type="button" data-lang="ms" aria-pressed="false">BM</button>
@@ -425,6 +427,9 @@ footer p+p{margin-top:6px}
       </div>
       <div class="sold" id="soldList"></div>
 
+      <div class="sec-head sub">
+        <h2 data-ms="Apa kata mereka tentang kami">What people say about us</h2>
+      </div>
       <div class="reviews">
         <figure class="rev">
           <span class="stars" aria-label="5 stars">★★★★★</span>
@@ -443,6 +448,9 @@ footer p+p{margin-top:6px}
         </figure>
       </div>
 
+      <div class="sec-head sub">
+        <h2 data-ms="Testimoni daripada pelanggan yang gembira">Testimonials from happy clients</h2>
+      </div>
       <div class="vids" id="vids">
         <figure class="vid short">
           <button class="vbox" type="button" data-yt="N0Gbht4hh9E" aria-label="Play: First-time HDB buyer Fikry's testimonial"><img src="https://i.ytimg.com/vi/N0Gbht4hh9E/hq2.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play"></span></button>
