@@ -177,6 +177,7 @@ section{padding-block:56px}
 .vid figcaption small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:3px}
 @media (max-width:899px){.vids{grid-template-columns:1fr 1fr}.vid.short{grid-row:span 2}}
 @media (max-width:600px){.vids{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(80vw,320px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.vid{scroll-snap-align:start}.vid.short{grid-row:auto}.vid.short .vbox{aspect-ratio:16/9}}
+.collage{margin:40px 0 0}.collage img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line)}.collage figcaption{margin-top:10px;font-size:14px;color:var(--muted)}
 .faq{max-width:760px}
 details{border-bottom:1px solid var(--line);padding-block:16px}
 summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;font-weight:700;font-size:17px}
@@ -426,6 +427,10 @@ footer p+p{margin-top:6px}
           </ul>
         </div>
       </div>
+      <figure class="collage">
+        <img src="/img/clients-collage.webp" alt="Andik with past clients after their sales and purchases" width="1200" height="615" loading="lazy">
+        <figcaption>Some of the 100+ families we've helped buy, sell and move.</figcaption>
+      </figure>
       <div class="reviews">
         <figure class="rev">
           <span class="stars" aria-label="5 stars">★★★★★</span>
