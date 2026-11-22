@@ -164,6 +164,19 @@ section{padding-block:56px}
 .rev figcaption b{color:var(--ink)}
 .textlink{display:inline-block;margin-top:16px;font-weight:600;color:var(--teal)}
 
+.vids{display:grid;grid-template-columns:minmax(0,.62fr) repeat(3,minmax(0,1fr));gap:14px;margin-top:34px;align-items:start}
+.vid{margin:0;display:grid;gap:10px;min-width:0}
+.vbox{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;border-radius:14px;overflow:hidden;background:var(--forest);border:0;padding:0;cursor:pointer;display:block}
+.vid.short .vbox{aspect-ratio:9/16}
+.vbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9;transition:opacity .15s}
+.vbox:hover img{opacity:1}
+.vbox .play{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:rgba(196,85,47,.95);display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.vbox .play::before{content:"";margin-left:4px;border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent #fff}
+.vbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid figcaption{font-size:14.5px;line-height:1.35}
+.vid figcaption small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:3px}
+@media (max-width:899px){.vids{grid-template-columns:1fr 1fr}.vid.short{grid-row:span 2}}
+@media (max-width:600px){.vids{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(80vw,320px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.vid{scroll-snap-align:start}.vid.short{grid-row:auto}.vid.short .vbox{aspect-ratio:16/9}}
 .faq{max-width:760px}
 details{border-bottom:1px solid var(--line);padding-block:16px}
 summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;font-weight:700;font-size:17px}
@@ -365,6 +378,35 @@ footer p+p{margin-top:6px}
           <li>Grandparents now help pick up the kids from school</li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <!-- 4b. Video testimonials -->
+  <section id="videos" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Watch</p>
+        <h2>Hear from our clients, and from us.</h2>
+      </div>
+<div class="vids" id="vids">
+        <figure class="vid short">
+          <button class="vbox" type="button" data-yt="N0Gbht4hh9E" aria-label="Play: First-time HDB buyer Fikry's testimonial"><img src="https://i.ytimg.com/vi/N0Gbht4hh9E/hq2.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play"></span></button>
+          <figcaption><small>Client story</small>Fikry, <span>first-time HDB buyer</span></figcaption>
+        </figure>
+        <figure class="vid">
+          <button class="vbox" type="button" data-yt="avTZy2KYlcc" aria-label="Play: How to plan for a comfortable life for your family"><img src="https://i.ytimg.com/vi/avTZy2KYlcc/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play"></span></button>
+          <figcaption><small>Video</small>How to plan for a comfortable life for your family</figcaption>
+        </figure>
+        <figure class="vid">
+          <button class="vbox" type="button" data-yt="4WSISVci6-c" aria-label="Play: Helping families decide clearly, not emotionally"><img src="https://i.ytimg.com/vi/4WSISVci6-c/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play"></span></button>
+          <figcaption><small>Video</small>Helping families decide clearly, not emotionally</figcaption>
+        </figure>
+        <figure class="vid">
+          <button class="vbox" type="button" data-yt="PPS65KrOp84" aria-label="Play: Right-size tanpa tersangkut CPF dan timeline HDB"><img src="https://i.ytimg.com/vi/PPS65KrOp84/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play"></span></button>
+          <figcaption><small>Video (BM)</small>Right-size: pindah tanpa tersangkut CPF &amp; timeline HDB</figcaption>
+        </figure>
+      </div>
+      <a class="btn auto" href="#plan-form" style="margin-top:26px">Get my free plan</a>
     </div>
   </section>
 
@@ -571,6 +613,22 @@ footer p+p{margin-top:6px}
     $("tyTitle").textContent = "Thank you, " + name + "!";
     $("wiz").hidden = true; $("thanks").hidden = false;
     $("plan-form").scrollIntoView({block:"start", behavior:"smooth"});
+  });
+  /* ===== Videos: load YouTube only when tapped ===== */
+  document.querySelectorAll("[data-yt]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var id = b.getAttribute("data-yt");
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0&playsinline=1";
+      f.title = b.getAttribute("aria-label");
+      f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      f.allowFullscreen = true;
+      var holder = document.createElement("div");
+      holder.className = "vbox";
+      holder.appendChild(f);
+      b.replaceWith(holder);
+      track("video_play", {video_id:id, page:"near_parents"});
+    });
   });
 })();
 </script>
