@@ -759,6 +759,12 @@ footer p+p{margin-top:6px}
     var d = {name:$("name").value.trim(), mobile:mobile, postal:st.postal, address:st.address, unit:$("unit").value.trim(),
              property:st.property, unitType:typeLabel || "", area:st.area};
     last = d;
+    try {
+      if (window.gtag) gtag("set", "user_data", {
+        phone_number: "+65" + mobile,
+        address: { first_name: d.name.split(" ")[0], postal_code: d.postal || "", country: "SG" }
+      });
+    } catch(e){}
     convert("generate_lead", SEND_TO_FORM);
     var stamp = new Date().toLocaleString("en-SG",{timeZone:"Asia/Singapore",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
     if (LEAD_WEBHOOK) {
