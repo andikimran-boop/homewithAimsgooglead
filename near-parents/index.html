@@ -177,6 +177,7 @@ section{padding-block:56px}
 .vid figcaption small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:3px}
 @media (max-width:899px){.vids{grid-template-columns:1fr 1fr}.vid.short{grid-row:span 2}}
 @media (max-width:600px){.vids{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(80vw,320px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.vid{scroll-snap-align:start}.vid.short{grid-row:auto}.vid.short .vbox{aspect-ratio:16/9}}
+.clients{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:40px 0 0}.clients img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;background:var(--line)}@media (max-width:899px){.clients{grid-template-columns:1fr 1fr}}
 .collage{margin:40px 0 0}.collage img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line)}.collage figcaption{margin-top:10px;font-size:14px;color:var(--muted)}
 .faq{max-width:760px}
 details{border-bottom:1px solid var(--line);padding-block:16px}
@@ -426,6 +427,12 @@ footer p+p{margin-top:6px}
             <li><b>Numbers first</b><span>You see the grant, the loan and the cash before you decide anything.</span></li>
           </ul>
         </div>
+      </div>
+      <div class="clients">
+        <img src="/img/client-1.webp" alt="Andik with past clients" loading="lazy" style="object-position:left 65%">
+        <img src="/img/client-2.webp" alt="Andik with past clients" loading="lazy" style="object-position:center 25%">
+        <img src="/img/client-3.webp" alt="Andik with past clients" loading="lazy" style="object-position:center 20%">
+        <img src="/img/client-4.webp" alt="Andik with past clients" loading="lazy" style="object-position:center 70%">
       </div>
       <figure class="collage">
         <img src="/img/clients-collage.webp" alt="Andik with past clients after their sales and purchases" width="1200" height="615" loading="lazy">
