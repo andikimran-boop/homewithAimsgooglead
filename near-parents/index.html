@@ -5,7 +5,7 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Just hit MOP? Move near your parents — SAFE Near Parents Plan | Homes with AIMS (PropNex)</title>
-<meta name="description" content="Sell your MOP flat, move into a bigger home near your parents, and move once with no gap. Free SAFE Near Parents Plan: grant check, loan, cash and timeline in 48 hours.">
+<meta name="description" content="Sell your MOP flat, move into a bigger home near your parents, and move once with no gap. Free SAFE Near Parents Plan: grant check, loan, cash and timeline, sent the same day.">
 <meta property="og:title" content="Move near your parents, into a bigger home — Homes with AIMS">
 <meta property="og:image" content="https://sell.homeswithaims.com/img/andik-mirta.png">
 <link rel="canonical" href="https://sell.homeswithaims.com/near-parents/">
@@ -177,6 +177,7 @@ section{padding-block:56px}
 .vid figcaption small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:3px}
 @media (max-width:899px){.vids{grid-template-columns:1fr 1fr}.vid.short{grid-row:span 2}}
 @media (max-width:600px){.vids{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:min(80vw,320px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.vid{scroll-snap-align:start}.vid.short{grid-row:auto}.vid.short .vbox{aspect-ratio:16/9}}
+.safe{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;list-style:none;padding:0;margin:0}.safe li{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px}.safe .l{font-family:var(--serif);font-size:54px;line-height:1;color:var(--terra);display:block;margin-bottom:8px}.safe b{display:block;font-size:18px;margin-bottom:6px}.safe span{color:var(--muted);font-size:15.5px}@media (max-width:899px){.safe{grid-template-columns:1fr 1fr}}@media (max-width:480px){.safe{grid-template-columns:1fr}}
 .clients{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:40px 0 0}.clients img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;background:var(--line)}@media (max-width:899px){.clients{grid-template-columns:1fr 1fr}}
 .collage{margin:40px 0 0}.collage img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line)}.collage figcaption{margin-top:10px;font-size:14px;color:var(--muted)}
 .faq{max-width:760px}
@@ -230,7 +231,7 @@ footer p+p{margin-top:6px}
       <div>
         <p class="eyebrow">For HDB owners who just hit MOP</p>
         <h1>Move near your parents, into a <em>bigger home</em>, with a grant of up to $30k.</h1>
-        <p class="lede">Our free <b>SAFE Near Parents Plan</b> shows in 48 hours if your family can sell, upgrade and move once, with no cash top-up. The Proximity Housing Grant is <b>$20k</b> to live within 4km of your parents, or <b>$30k</b> to live with them.</p>
+        <p class="lede">Get your free, personalised <b>SAFE Near Parents Plan</b> the same day. It shows if your family can sell, upgrade and move once, with no cash top-up. The Proximity Housing Grant is <b>$20k</b> to live within 4km of your parents, or <b>$30k</b> to live with them.</p>
         <ul class="ticks">
           <li>Grant check, loan, cash and timeline in one plan</li>
           <li>Move once, with no renting in between</li>
@@ -246,7 +247,7 @@ footer p+p{margin-top:6px}
         <div id="wiz">
           <div class="card-head">
             <h2>Get your free plan</h2>
-            <span class="count" id="count">Step 1 of 6</span>
+            <span class="count" id="count">Step 1 of 8</span>
           </div>
           <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
 
@@ -256,7 +257,7 @@ footer p+p{margin-top:6px}
               <label class="qt" for="postal">What's your flat's postal code?</label>
               <p class="qh">So we can pull recent sales in your block.</p>
               <input class="big" id="postal" inputmode="numeric" autocomplete="postal-code" maxlength="6" placeholder="e.g. 650460">
-              <button class="btn" type="button" data-go="2">Next</button>
+              <button class="btn" type="button" data-next>Next</button>
             </div>
 
             <!-- 2. Flat type -->
@@ -270,17 +271,25 @@ footer p+p{margin-top:6px}
               </div>
             </div>
 
-            <!-- 3. Parents' postal -->
+            <!-- 3. Unit number -->
             <div class="step" data-step="3" hidden>
+              <label class="qt" for="unit">What's your unit number?</label>
+              <p class="qh">Your floor changes what your flat can sell for.</p>
+              <input class="big" id="unit" autocomplete="address-line2" placeholder="e.g. #12-345">
+              <button class="btn" type="button" data-next>Next</button>
+            </div>
+
+            <!-- 4. Parents' postal -->
+            <div class="step" data-step="4" hidden>
               <label class="qt" for="ppostal">What's your parents' postal code?</label>
               <p class="qh">To check the 4km grant rule and find flats near them.</p>
               <input class="big" id="ppostal" inputmode="numeric" maxlength="6" placeholder="e.g. 560123">
-              <button class="btn" type="button" data-go="4">Next</button>
-              <button class="linkbtn" type="button" data-skip="4">Not sure, skip for now</button>
+              <button class="btn" type="button" data-next>Next</button>
+              <button class="linkbtn" type="button" data-skip>Not sure, skip for now</button>
             </div>
 
-            <!-- 4. MOP -->
-            <div class="step" data-step="4" hidden>
+            <!-- 5. MOP -->
+            <div class="step" data-step="5" hidden>
               <p class="qt">When did your flat reach MOP?</p>
               <div class="opts" data-field="mop">
                 <button type="button" class="opt" data-val="Within the last year">Within the last year</button>
@@ -290,8 +299,8 @@ footer p+p{margin-top:6px}
               </div>
             </div>
 
-            <!-- 5. Timeline -->
-            <div class="step" data-step="5" hidden>
+            <!-- 6. Timeline -->
+            <div class="step" data-step="6" hidden>
               <p class="qt">When are you thinking of moving?</p>
               <div class="opts" data-field="when">
                 <button type="button" class="opt" data-val="Within 6 months">Within 6 months</button>
@@ -300,12 +309,17 @@ footer p+p{margin-top:6px}
               </div>
             </div>
 
-            <!-- 6. Contact -->
-            <div class="step" data-step="6" hidden>
-              <p class="qt">Where should we send your plan?</p>
-              <label class="qh" for="name">Your name</label>
+            <!-- 7. Name -->
+            <div class="step" data-step="7" hidden>
+              <label class="qt" for="name">What's your name?</label>
               <input class="big" id="name" autocomplete="given-name">
-              <label class="qh" for="mobile">Your WhatsApp number</label>
+              <button class="btn" type="button" data-next>Next</button>
+            </div>
+
+            <!-- 8. WhatsApp -->
+            <div class="step" data-step="8" hidden>
+              <label class="qt" for="mobile">What's your WhatsApp number?</label>
+              <p class="qh">We'll send your plan here.</p>
               <div class="phone"><span>+65</span><input id="mobile" inputmode="numeric" autocomplete="tel-national" placeholder="8123 4567" maxlength="9"></div>
               <button class="btn" type="submit">Send my plan</button>
               <p class="fine">By sending, you agree that Homes with AIMS (Andik &amp; Mirta) may contact you on WhatsApp about your plan, in line with the PDPA. No spam.</p>
@@ -319,12 +333,30 @@ footer p+p{margin-top:6px}
         <div id="thanks" class="thanks" hidden>
           <div class="tick" aria-hidden="true">✓</div>
           <h2 id="tyTitle">Thank you!</h2>
-          <p>Your plan is being prepared. It will come from our Homes with AIMS WhatsApp, <b>8568 5643</b>, within 24 hours. Save it so you don't miss it.</p>
+          <p>We've received your request for the SAFE Near Parents Plan. Your personalised plan will come the same day from our Homes with AIMS WhatsApp, <b>8568 5643</b>. Save it so you don't miss it.</p>
+          <p class="fine">Requests after 9pm are sent the next morning.</p>
           <p class="sig">Andik &amp; Mirta</p>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- 1b. What SAFE means -->
+  <section id="safe" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">What is the SAFE Near Parents Plan?</p>
+        <h2>A plan to move near your parents without stretching your family.</h2>
+        <p>It's a personalised plan built from your flat and your parents' address. SAFE is our 4-point check that the move won't strain you.</p>
+      </div>
+      <ul class="safe">
+        <li><span class="l">S</span><b>Sale pays for it</b><span>Your sale covers the move. No cash top-up from your savings.</span></li>
+        <li><span class="l">A</span><b>Aside first</b><span>An emergency fund is set aside from your sale proceeds before anything else.</span></li>
+        <li><span class="l">F</span><b>Four years covered</b><span>Four years of mortgage payments are covered by your CPF and a cash buffer from the sale.</span></li>
+        <li><span class="l">E</span><b>Even if rates rise</b><span>We check your instalment at a higher interest rate, so a rate rise doesn't catch you out.</span></li>
+      </ul>
+    </div>
+  </section>
 
   <!-- 2. Offer stack -->
   <section class="dark" id="whats-in">
@@ -338,7 +370,7 @@ footer p+p{margin-top:6px}
         <li><b>Flats near your parents</b><span>A shortlist of resale flats within 4km of your parents, with what they sold for recently.</span></li>
         <li><b>What your flat can sell for</b><span>Recent sales in your own block, so you know your real number.</span></li>
         <li><b>HDB loan or bank loan?</b><span>Which saves your family more. Most people don't know you can switch from an HDB loan to a bank loan, but never back.</span></li>
-        <li><b>SAFE check</b><span>Can your sale cover the upgrade without a cash top-up, with 4 years of mortgage set aside?</span></li>
+        <li><b>SAFE check</b><span>Does your move pass all four SAFE points above?</span></li>
         <li><b>Move-once timeline</b><span>When to sell, when to buy, and how you stay put until your new home is ready.</span></li>
       </ol>
       <a class="btn auto" href="#plan-form">Get my free plan</a>
@@ -501,7 +533,7 @@ footer p+p{margin-top:6px}
   <section class="dark final">
     <div class="wrap">
       <h2>Your kids, closer to their grandparents.</h2>
-      <p>Find out in 48 hours if your family can make the move: the grant, the loan, the cash and the timeline, all in one free plan.</p>
+      <p>Find out today if your family can make the move: the grant, the loan, the cash and the timeline, all in one free plan.</p>
       <a class="btn auto" href="#plan-form">Get my free plan</a>
     </div>
   </section>
@@ -522,11 +554,11 @@ footer p+p{margin-top:6px}
   var SEND_TO_FORM = "AW-16974548722/nB6sCObHqKQdEPKdjJ4_"; // Google Ads: "Form Submit - AIMS"
   // Same Make.com webhook as the main page. Leads land in the same sheet; the "page" column shows /near-parents/.
   var LEAD_WEBHOOK = "https://hook.eu1.make.com/r2xwq6c4xa2bv7gpruswla6e7w3pw9v8";
-  var TOTAL = 6;
+  var TOTAL = 8;
 
   var $ = function(id){ return document.getElementById(id); };
   var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
-  var d = {postal:"", flat:"", ppostal:"", mop:"", when:""};
+  var d = {postal:"", flat:"", unit:"", ppostal:"", mop:"", when:"", name:""};
   var cur = 1, history = [], started = false;
   function digits(v){ return (v||"").replace(/\D/g,""); }
 
@@ -568,24 +600,34 @@ footer p+p{margin-top:6px}
     if (from === 1) {
       var pc = digits($("postal").value);
       if (!/^\d{6}$/.test(pc)) return fail("Please enter your 6-digit postal code.", $("postal"));
-      d.postal = pc; go(2);
+      d.postal = pc;
     } else if (from === 3) {
+      var u = $("unit").value.trim();
+      if (!u) return fail("Please enter your unit number, e.g. #12-345.", $("unit"));
+      d.unit = u;
+    } else if (from === 4) {
       var pp = digits($("ppostal").value);
       if (!/^\d{6}$/.test(pp)) return fail("Please enter a 6-digit postal code, or tap skip.", $("ppostal"));
-      d.ppostal = pp; go(4);
-    }
+      d.ppostal = pp;
+    } else if (from === 7) {
+      var nm = $("name").value.trim();
+      if (!nm) return fail("Please enter your name.", $("name"));
+      d.name = nm;
+    } else return;
+    go(from + 1);
   }
 
-  document.querySelectorAll("[data-go]").forEach(function(b){
-    b.addEventListener("click", function(){ markStart(); next(+b.getAttribute("data-go") - 1); });
+  document.querySelectorAll("[data-next]").forEach(function(b){
+    b.addEventListener("click", function(){ markStart(); next(cur); });
   });
   document.querySelectorAll("[data-skip]").forEach(function(b){
-    b.addEventListener("click", function(){ d.ppostal = "Not given"; go(+b.getAttribute("data-skip")); });
+    b.addEventListener("click", function(){ d.ppostal = "Not given"; go(cur + 1); });
   });
-  $("postal").addEventListener("input", function(){ markStart(); if (digits(this.value).length === 6) next(1); });
-  $("postal").addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); next(1); } });
-  $("ppostal").addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); next(3); } });
-  $("name").addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); $("mobile").focus(); } });
+  $("postal").addEventListener("input", function(){ markStart(); if (cur === 1 && digits(this.value).length === 6) next(1); });
+  ["postal","unit","ppostal","name","mobile"].forEach(function(id){ $(id).addEventListener("input", clearErr); });
+  ["postal","unit","ppostal","name"].forEach(function(id){
+    $(id).addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); next(cur); } });
+  });
 
   document.querySelectorAll(".opts[data-field]").forEach(function(group){
     var field = group.getAttribute("data-field");
@@ -603,11 +645,17 @@ footer p+p{margin-top:6px}
 
   $("form").addEventListener("submit", function(e){
     e.preventDefault();
-    var name = $("name").value.trim();
-    if (!name) return fail("Please enter your name.", $("name"));
+    if (cur !== TOTAL) { next(cur); return; }
+    var name = d.name;
     var mobile = digits($("mobile").value).replace(/^65(?=\d{8}$)/,"");
     if (!/^[89]\d{7}$/.test(mobile)) return fail("Please enter an 8-digit Singapore mobile number starting with 8 or 9.", $("mobile"));
 
+    try {
+      if (window.gtag) gtag("set", "user_data", {
+        phone_number: "+65" + mobile,
+        address: { first_name: name.split(" ")[0], postal_code: d.postal || "", country: "SG" }
+      });
+    } catch(x){}
     try { if (window.gtag) { gtag("event","conversion",{send_to:SEND_TO_FORM}); gtag("event","generate_lead",{form:"near_parents"}); } } catch(x){}
     try { if (window.fbq) fbq("track","Lead"); } catch(x){}
 
@@ -616,7 +664,7 @@ footer p+p{margin-top:6px}
     if (LEAD_WEBHOOK) {
       var body = new URLSearchParams({
         submitted_at:stamp, name:name, mobile:mobile.slice(0,4)+" "+mobile.slice(4), wa_link:"https://wa.me/65"+mobile,
-        postal_code:d.postal, address:summary, unit_no:"", property:"HDB", unit_type:d.flat, area:"Near Parents (islandwide)",
+        postal_code:d.postal, address:summary, unit_no:d.unit, property:"HDB", unit_type:d.flat, area:"Near Parents (islandwide)",
         language:"en", page:SOURCE + " | " + location.href,
         offer:"SAFE Near Parents Plan", parents_postal:d.ppostal, mop:d.mop, move_timeline:d.when
       });
