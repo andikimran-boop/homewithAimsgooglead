@@ -247,7 +247,7 @@ footer p+p{margin-top:6px}
         <div id="wiz">
           <div class="card-head">
             <h2>Get your free plan</h2>
-            <span class="count" id="count">Step 1 of 8</span>
+            <span class="count" id="count">Step 1 of 9</span>
           </div>
           <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
 
@@ -288,19 +288,32 @@ footer p+p{margin-top:6px}
               <button class="linkbtn" type="button" data-skip>Not sure, skip for now</button>
             </div>
 
-            <!-- 5. MOP -->
+            <!-- 5. MOP reached? -->
             <div class="step" data-step="5" hidden>
-              <p class="qt">When did your flat reach MOP?</p>
-              <div class="opts" data-field="mop">
-                <button type="button" class="opt" data-val="Within the last year">Within the last year</button>
-                <button type="button" class="opt" data-val="1 to 3 years ago">1 to 3 years ago</button>
-                <button type="button" class="opt" data-val="More than 3 years ago">More than 3 years ago</button>
-                <button type="button" class="opt" data-val="Not yet">Not yet</button>
+              <p class="qt">Has your flat reached MOP?</p>
+              <div class="opts grid2" data-field="mopReached">
+                <button type="button" class="opt" data-val="Yes">Yes</button>
+                <button type="button" class="opt" data-val="No">No</button>
               </div>
             </div>
 
-            <!-- 6. Timeline -->
+            <!-- 6. MOP when -->
             <div class="step" data-step="6" hidden>
+              <p class="qt" id="mopQ">When did it reach MOP?</p>
+              <div class="opts" data-field="mop" id="mopYes">
+                <button type="button" class="opt" data-val="Within the last year">Within the last year</button>
+                <button type="button" class="opt" data-val="1 to 3 years ago">1 to 3 years ago</button>
+                <button type="button" class="opt" data-val="More than 3 years ago">More than 3 years ago</button>
+              </div>
+              <div class="opts" data-field="mop" id="mopNo" hidden>
+                <button type="button" class="opt" data-val="In the next 6 months">In the next 6 months</button>
+                <button type="button" class="opt" data-val="In 6 to 12 months">In 6 to 12 months</button>
+                <button type="button" class="opt" data-val="More than a year away">More than a year away</button>
+              </div>
+            </div>
+
+            <!-- 7. Timeline -->
+            <div class="step" data-step="7" hidden>
               <p class="qt">When are you thinking of moving?</p>
               <div class="opts" data-field="when">
                 <button type="button" class="opt" data-val="Within 6 months">Within 6 months</button>
@@ -309,15 +322,15 @@ footer p+p{margin-top:6px}
               </div>
             </div>
 
-            <!-- 7. Name -->
-            <div class="step" data-step="7" hidden>
+            <!-- 8. Name -->
+            <div class="step" data-step="8" hidden>
               <label class="qt" for="name">What's your name?</label>
               <input class="big" id="name" autocomplete="given-name">
               <button class="btn" type="button" data-next>Next</button>
             </div>
 
-            <!-- 8. WhatsApp -->
-            <div class="step" data-step="8" hidden>
+            <!-- 9. WhatsApp -->
+            <div class="step" data-step="9" hidden>
               <label class="qt" for="mobile">What's your WhatsApp number?</label>
               <p class="qh">We'll send your plan here.</p>
               <div class="phone"><span>+65</span><input id="mobile" inputmode="numeric" autocomplete="tel-national" placeholder="8123 4567" maxlength="9"></div>
@@ -554,11 +567,11 @@ footer p+p{margin-top:6px}
   var SEND_TO_FORM = "AW-16974548722/nB6sCObHqKQdEPKdjJ4_"; // Google Ads: "Form Submit - AIMS"
   // Same Make.com webhook as the main page. Leads land in the same sheet; the "page" column shows /near-parents/.
   var LEAD_WEBHOOK = "https://hook.eu1.make.com/r2xwq6c4xa2bv7gpruswla6e7w3pw9v8";
-  var TOTAL = 8;
+  var TOTAL = 9;
 
   var $ = function(id){ return document.getElementById(id); };
   var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
-  var d = {postal:"", flat:"", unit:"", ppostal:"", mop:"", when:"", name:""};
+  var d = {postal:"", flat:"", unit:"", ppostal:"", mopReached:"", mop:"", when:"", name:""};
   var cur = 1, history = [], started = false;
   function digits(v){ return (v||"").replace(/\D/g,""); }
 
@@ -587,6 +600,11 @@ footer p+p{margin-top:6px}
   function go(n, fromBack){
     if (!fromBack) history.push(cur);
     cur = n; clearErr();
+    if (n === 6) {
+      var reached = d.mopReached !== "No";
+      $("mopQ").textContent = reached ? "When did it reach MOP?" : "When will it reach MOP?";
+      $("mopYes").hidden = !reached; $("mopNo").hidden = reached;
+    }
     steps.forEach(function(s){ s.hidden = +s.getAttribute("data-step") !== n; });
     $("count").textContent = "Step " + n + " of " + TOTAL;
     $("barFill").style.width = ((n - 1) / TOTAL * 100) + "%";
@@ -609,7 +627,7 @@ footer p+p{margin-top:6px}
       var pp = digits($("ppostal").value);
       if (!/^\d{6}$/.test(pp)) return fail("Please enter a 6-digit postal code, or tap skip.", $("ppostal"));
       d.ppostal = pp;
-    } else if (from === 7) {
+    } else if (from === 8) {
       var nm = $("name").value.trim();
       if (!nm) return fail("Please enter your name.", $("name"));
       d.name = nm;
@@ -624,6 +642,7 @@ footer p+p{margin-top:6px}
     b.addEventListener("click", function(){ d.ppostal = "Not given"; go(cur + 1); });
   });
   $("postal").addEventListener("input", function(){ markStart(); if (cur === 1 && digits(this.value).length === 6) next(1); });
+  $("ppostal").addEventListener("input", function(){ if (cur === 4 && digits(this.value).length === 6) next(4); });
   ["postal","unit","ppostal","name","mobile"].forEach(function(id){ $(id).addEventListener("input", clearErr); });
   ["postal","unit","ppostal","name"].forEach(function(id){
     $(id).addEventListener("keydown", function(e){ if (e.key === "Enter") { e.preventDefault(); next(cur); } });
@@ -633,6 +652,9 @@ footer p+p{margin-top:6px}
     var field = group.getAttribute("data-field");
     group.querySelectorAll(".opt").forEach(function(b){
       b.addEventListener("click", function(){
+        if (field === "mopReached" && d.mopReached !== b.getAttribute("data-val")) {
+          d.mop = ""; document.querySelectorAll('[data-field="mop"] .opt').forEach(function(o){ o.setAttribute("aria-pressed","false"); });
+        }
         d[field] = b.getAttribute("data-val");
         group.querySelectorAll(".opt").forEach(function(o){ o.setAttribute("aria-pressed", String(o === b)); });
         var n = +group.closest(".step").getAttribute("data-step");
@@ -660,13 +682,14 @@ footer p+p{margin-top:6px}
     try { if (window.fbq) fbq("track","Lead"); } catch(x){}
 
     var stamp = new Date().toLocaleString("en-SG",{timeZone:"Asia/Singapore",day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
-    var summary = "NEAR PARENTS · Parents' postal: " + (d.ppostal || "Not given") + " · MOP: " + d.mop + " · Moving: " + d.when;
+    var mopText = (d.mopReached === "No" ? "Not yet, " : "Reached, ") + d.mop.charAt(0).toLowerCase() + d.mop.slice(1);
+    var summary = "NEAR PARENTS · Parents' postal: " + (d.ppostal || "Not given") + " · MOP: " + mopText + " · Moving: " + d.when;
     if (LEAD_WEBHOOK) {
       var body = new URLSearchParams({
         submitted_at:stamp, name:name, mobile:mobile.slice(0,4)+" "+mobile.slice(4), wa_link:"https://wa.me/65"+mobile,
         postal_code:d.postal, address:summary, unit_no:d.unit, property:"HDB", unit_type:d.flat, area:"Near Parents (islandwide)",
         language:"en", page:SOURCE + " | " + location.href,
-        offer:"SAFE Near Parents Plan", parents_postal:d.ppostal, mop:d.mop, move_timeline:d.when
+        offer:"SAFE Near Parents Plan", parents_postal:d.ppostal, mop:mopText, mop_reached:d.mopReached, move_timeline:d.when
       });
       try { fetch(LEAD_WEBHOOK, {method:"POST", mode:"no-cors", body:body}); } catch(x){}
     }
