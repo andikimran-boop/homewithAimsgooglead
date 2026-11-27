@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Book a consultation — Homes with AIMS</title>
+<!-- Used by the "Book a consultation" button in WhatsApp follow-ups (Meta does not allow wa.me links on template buttons). -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-96K2HYZD2X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-96K2HYZD2X');
+  var WA = "https://wa.me/6587368736?text=Hi%20Andik%2C%20I%20have%20received%20my%20valuation%20report%20and%20would%20like%20to%20book%20an%20appointment%20with%20you.";
+  gtag('event', 'book_consultation_click', { event_callback: function(){ location.replace(WA); }, event_timeout: 800 });
+  setTimeout(function(){ location.replace(WA); }, 900);
+</script>
+<style>body{font-family:system-ui,sans-serif;background:#F6F1E7;color:#15241F;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:24px}a{display:inline-block;margin-top:16px;padding:14px 22px;border-radius:14px;background:#25D366;color:#fff;font-weight:700;text-decoration:none}</style>
+</head>
+<body>
+  <div>
+    <p>Opening WhatsApp to chat with Andik…</p>
+    <a href="https://wa.me/6587368736?text=Hi%20Andik%2C%20I%20have%20received%20my%20valuation%20report%20and%20would%20like%20to%20book%20an%20appointment%20with%20you.">Tap here if it doesn't open</a>
+  </div>
+</body>
+</html>
